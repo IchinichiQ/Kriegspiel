@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,24 +13,23 @@ public class ImageFileCached {
 
     public static Image readImage(File file) throws IOException {
         Image cachedImage = cache.get(file.getPath());
+        if (cachedImage != null)
+            return cachedImage;
 
-        if (cachedImage == null) {
-            cachedImage = ImageIO.read(file);
+        Image rawImage = ImageIO.read(file);
 
-            GraphicsConfiguration gfx_config = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();;
-            BufferedImage new_image = gfx_config.createCompatibleImage(
-                    cachedImage.getWidth(null), cachedImage.getHeight(null), Transparency.TRANSLUCENT);
+        GraphicsConfiguration gfx_config = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice().getDefaultConfiguration();
+        BufferedImage optimisedImage = gfx_config.createCompatibleImage(
+                rawImage.getWidth(null), rawImage.getHeight(null), Transparency.TRANSLUCENT);
 
-            // get the graphics context of the new image to draw the old image on
-            Graphics2D g2d = (Graphics2D) new_image.getGraphics();
+        // Draw the old image on the new
+        Graphics2D g2d = (Graphics2D) optimisedImage.getGraphics();
+        g2d.drawImage(rawImage, 0, 0, null);
+        g2d.dispose();
 
-            // actually draw the image and dispose of context no longer needed
-            g2d.drawImage(cachedImage, 0, 0, null);
-            g2d.dispose();
+        cache.put(file.getPath(), optimisedImage);
 
-            cache.put(file.getPath(), cachedImage);
-        }
-
-        return cachedImage;
+        return optimisedImage;
     }
 }

@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setTitle("Kriegspiel");
 
-        setSize(1280, 720);
+        setSize(1200, 700);
 
         JPanel MainPanel = new JPanel(new BorderLayout());
 

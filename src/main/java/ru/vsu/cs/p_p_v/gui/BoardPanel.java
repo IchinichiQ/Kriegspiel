@@ -2,10 +2,7 @@ package ru.vsu.cs.p_p_v.gui;
 
 import ru.vsu.cs.p_p_v.cell.BoardCell;
 import ru.vsu.cs.p_p_v.cli.ConsoleColor;
-import ru.vsu.cs.p_p_v.game.Board;
-import ru.vsu.cs.p_p_v.game.Coordinate;
-import ru.vsu.cs.p_p_v.game.Game;
-import ru.vsu.cs.p_p_v.game.GameEventListener;
+import ru.vsu.cs.p_p_v.game.*;
 import ru.vsu.cs.p_p_v.unit.BoardUnit;
 
 import javax.swing.*;
@@ -203,6 +200,7 @@ public class BoardPanel extends JPanel {
             panelHeight = d.height;
             panelWidth = (int) (d.height * preferredProportion);
         } else {
+            // Height is bigger
             panelWidth = d.width;
             panelHeight = (int) (d.width * (1 / preferredProportion));
         }
@@ -210,6 +208,7 @@ public class BoardPanel extends JPanel {
         return new Dimension(panelWidth, panelHeight);
     }
 
+    private int drawNum = 0;
     @Override
     protected void paintComponent(Graphics g) {
         long startTime = System.nanoTime();
@@ -221,7 +220,7 @@ public class BoardPanel extends JPanel {
         drawBoard(g2d);
         overlay.draw(g2d);
 
-        System.out.printf("Draw: %d\n", (System.nanoTime() - startTime) / 1000000);
+        System.out.printf("Draw #%d: %d ms\n", drawNum++, (System.nanoTime() - startTime) / 1000000);
     }
 
     public Game getGame() {
