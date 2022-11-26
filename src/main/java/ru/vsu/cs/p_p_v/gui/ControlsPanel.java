@@ -5,6 +5,7 @@ import ru.vsu.cs.p_p_v.game.GameEventListener;
 import ru.vsu.cs.p_p_v.game.Teams;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -17,8 +18,12 @@ public class ControlsPanel extends JPanel {
 
     public ControlsPanel(Game game) {
         this.game = game;
+        this.setLayout(new GridBagLayout());
 
         updateLabelsText();
+
+        // TODO: Kostyl?
+        labelLeftMoves.setBorder(new EmptyBorder(0, 0, 0, 1));
 
         buttonNextTurn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -27,12 +32,23 @@ public class ControlsPanel extends JPanel {
         });
         buttonNextTurn.setText("Next turn");
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        this.add(labelCurrentTurn);
-        this.add(labelLeftMoves);
-        this.add(labelIsAttackUsed);
-        this.add(buttonNextTurn);
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        this.add(labelCurrentTurn, gbc);
+
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        this.add(labelLeftMoves, gbc);
+
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        this.add(labelIsAttackUsed, gbc);
+
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.NORTH;
+        this.add(buttonNextTurn, gbc);
 
         game.addGameEventListener(new GameEventListener() {
             @Override

@@ -4,4 +4,5 @@ public interface GameEventListener {
     default void onNextTurn() {}
     default void onUnitMove() {};
     default void onAttack() {};
+    default void onWin() {};
 }

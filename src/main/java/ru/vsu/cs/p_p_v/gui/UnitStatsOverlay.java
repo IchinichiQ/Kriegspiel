@@ -3,6 +3,7 @@ package ru.vsu.cs.p_p_v.gui;
 import ru.vsu.cs.p_p_v.cell.BoardCell;
 import ru.vsu.cs.p_p_v.game.Game;
 import ru.vsu.cs.p_p_v.unit.BoardUnit;
+import ru.vsu.cs.p_p_v.unit.UnitStats;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class UnitStatsOverlay {
-    private BoardPanel boardPanel;
-    private Game game;
+    private final BoardPanel boardPanel;
 
     private BoardCell hoveredCell = null;
     private Point mousePoint = null;
@@ -20,7 +20,6 @@ public class UnitStatsOverlay {
 
     public UnitStatsOverlay(BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
-        this.game = this.boardPanel.getGame();
 
         this.boardPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -83,8 +82,32 @@ public class UnitStatsOverlay {
 
         Point worldMousePoint = boardPanel.pointScreenToWorld(mousePoint);
 
+        int width = 70;
+        int height = 90;
+        int xOffset = 3;
+        int yOffset = height * -1 - 3;
+
+        int x = worldMousePoint.x + xOffset;
+        int y = worldMousePoint.y + yOffset;
+
+        g.setColor(Color.white);
+        g.fillRect(x, y, width, height);
+
         g.setColor(Color.red);
-        g.drawString(String.valueOf(hoveredUnit.getDefenseScore()), worldMousePoint.x, worldMousePoint.y);
-        g.drawString(String.valueOf(hoveredUnit.getAttackScore()), worldMousePoint.x, worldMousePoint.y - 15);
+        g.setFont(g.getFont());
+
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        UnitStats hoveredUnitStats = hoveredUnit.getBaseStats();
+        g.drawString("    STATS", x + 1, y + 10);
+        g.drawString("Speed: " + String.valueOf(hoveredUnitStats.speed), x + 1, y + 20);
+        g.drawString("Range: " + String.valueOf(hoveredUnitStats.range), x + 1, y + 30);
+        g.drawString("Attack: " + String.valueOf(hoveredUnitStats.attack), x + 1, y + 40);
+        g.drawString("Defense: " + String.valueOf(hoveredUnitStats.defense), x + 1, y + 50);
+
+
+        g.drawString("   COMBAT", x + 1, y + 65);
+        g.drawString("Defense: " + String.valueOf(hoveredUnit.getDefenseScore()), x + 1, y + 75);
+        g.drawString("Attack: " + String.valueOf(hoveredUnit.getAttackScore()), x + 1, y + 85);
     }
 }

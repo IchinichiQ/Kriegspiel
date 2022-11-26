@@ -12,10 +12,10 @@ public class Game {
 
     private Teams currentTurnTeam = Teams.South;
     private int leftMoves = 5;
-    private List<BoardUnit> movedUnits = new ArrayList<>();
+    private final List<BoardUnit> movedUnits = new ArrayList<>();
     private boolean isAttackUsed = false;
 
-    private List<GameEventListener> eventListeners = new ArrayList<>();
+    private final List<GameEventListener> eventListeners = new ArrayList<>();
 
     public Game(String fieldJsonPath, String unitsJsonPath) {
         board = new Board();
@@ -185,6 +185,11 @@ public class Game {
 
         for (GameEventListener listener : eventListeners)
             listener.onAttack();
+
+        if (true) {
+            for (GameEventListener listener : eventListeners)
+                listener.onWin();
+        }
 
         return result;
     }

@@ -10,13 +10,11 @@ import java.util.Objects;
 public class Main {
 
     public static void main(String[] args) {
-        Game game = new Game("field.json", "units.json");
-
         if (Arrays.asList(args).contains("-CLI")) {
-            CLI cli = new CLI(game);
+            CLI cli = new CLI();
             cli.run();
         } else {
-            GUI gui = new GUI(game);
+            GUI gui = new GUI();
             gui.run();
         }
     }

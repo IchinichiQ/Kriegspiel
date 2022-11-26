@@ -8,34 +8,19 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainWindow extends JFrame {
-    private Game game;
-    ControlsPanel controlsPanel;
-    BoardPanel boardPanel;
-
-    public MainWindow(Game game, ControlsPanel controlsPanel, BoardPanel boardPanel) throws HeadlessException {
-        this.game = game;
-        this.controlsPanel = controlsPanel;
-        this.boardPanel = boardPanel;
-
+    public MainWindow() throws HeadlessException {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setTitle("Kriegspiel");
 
-        setSize(1200, 700);
-
-        JPanel MainPanel = new JPanel(new BorderLayout());
-
-        JPanel boardContainer = new JPanel(new GridBagLayout());
-        boardContainer.setBackground(Color.black);
-        boardContainer.add(boardPanel);
-
-        JPanel controlsContainer = new JPanel();
-        controlsContainer.add(controlsPanel);
-
-        MainPanel.add(boardContainer, BorderLayout.CENTER);
-        MainPanel.add(controlsContainer, BorderLayout.EAST);
-
-        this.add(MainPanel);
+        setSize(750, 500);
     }
 
+    public void setMainPanel(JPanel panel) {
+        JPanel content = (JPanel) this.getContentPane();
+        content.removeAll();
+        content.add(panel);
 
+        this.revalidate();
+        this.repaint();
+    }
 }

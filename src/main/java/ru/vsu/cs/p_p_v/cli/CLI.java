@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 public class CLI {
     Game game;
-    public CLI(Game game) {
-        this.game = game;
+    public CLI() {
+        this.game = new Game("field.json", "units.json");;
     }
 
     public void run() {

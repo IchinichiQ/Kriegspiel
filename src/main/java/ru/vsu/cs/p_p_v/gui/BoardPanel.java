@@ -17,15 +17,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class BoardPanel extends JPanel {
-    private Game game;
-    private int boardHeight;
-    private int boardWidth;
-    private int cellSideLength;
+    private final Game game;
+    private final int boardHeight;
+    private final int boardWidth;
+    private final int cellSideLength;
 
     private int panelWidth;
     private int panelHeight;
 
-    private UnitStatsOverlay overlay;
+    private final UnitStatsOverlay overlay;
     private BoardCell selectedUnitCell = null;
 
     public BoardPanel(Game game) {
