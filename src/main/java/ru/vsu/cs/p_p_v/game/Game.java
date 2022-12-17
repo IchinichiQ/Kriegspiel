@@ -186,7 +186,7 @@ public class Game {
         for (GameEventListener listener : eventListeners)
             listener.onAttack();
 
-        if (true) {
+        if (getWinner() != Teams.None) {
             for (GameEventListener listener : eventListeners)
                 listener.onWin();
         }

@@ -30,7 +30,7 @@ public class ControlsPanel extends JPanel {
                 game.nextTurn();
             }
         });
-        buttonNextTurn.setText("Next turn");
+        buttonNextTurn.setText("End turn");
 
         GridBagConstraints gbc = new GridBagConstraints();
 
