@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Make interface Game" />
+    <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Remove json classes">
+      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/parser/CellJson.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/parser/UnitJson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/field.json" beforeDir="false" afterPath="$PROJECT_DIR$/field.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/units.json" beforeDir="false" afterPath="$PROJECT_DIR$/units.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +88,7 @@
       <updated>1671291976931</updated>
       <workItem from="1671291978318" duration="300000" />
       <workItem from="1671292286437" duration="3089000" />
-      <workItem from="1671367055113" duration="2437000" />
+      <workItem from="1671367055113" duration="3399000" />
     </task>
     <task id="LOCAL-00001" summary="Split the project into sdk and client">
       <created>1671292994785</created>
@@ -96,7 +104,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671293754326</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add unversioned files">
+      <created>1671369527594</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1671369527594</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Remove json classes">
+      <created>1671369576940</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1671369576940</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,6 +138,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Split the project into sdk and client" />
     <MESSAGE value="Make interface Game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make interface Game" />
+    <MESSAGE value="Add unversioned files" />
+    <MESSAGE value="Remove json classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove json classes" />
   </component>
 </project>

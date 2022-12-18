@@ -1,10 +1,12 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.files.UnitJson;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.CellJson;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.UnitJson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.*;
 
@@ -36,17 +38,16 @@ public class Board {
     public void AppendFieldFromFile(String path) throws IOException, ParseException {
         String jsonString = Files.readString(Path.of(path));
 
-        JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
-        JSONArray cells = (JSONArray) json.get("cells");
-        for (Object obj : cells) {
-            JSONObject cell = (JSONObject) obj;
-            int x = (int) (long) cell.get("x");
-            int y = (int) (long) cell.get("y");
+        CellJson[] cells = new Gson().fromJson(jsonString, CellJson[].class);
+
+        for (CellJson cellJson : cells) {
+            int x = cellJson.getX();
+            int y = cellJson.getY();
             x--;
             y--;
 
             BoardCell curCell = null;
-            switch ((String) cell.get("type")) {
+            switch (cellJson.getType()) {
                 case "empty" -> curCell = new Empty(new Coordinate(x, y));
                 case "fortress" -> curCell = new Fortress(new Coordinate(x, y));
                 case "mountain" -> curCell = new Mountain(new Coordinate(x, y));
@@ -57,25 +58,24 @@ public class Board {
         }
     }
 
-    public void AppendUnitsFromFile(String path) throws IOException, ParseException {
+    public void AppendUnitsFromFile(String path) throws IOException {
         String jsonString = Files.readString(Path.of(path));
 
-        JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
-        JSONArray units = (JSONArray) json.get("units");
-        for (Object obj : units) {
-            JSONObject cell = (JSONObject) obj;
-            int x = (int) (long) cell.get("x");
-            int y = (int) (long) cell.get("y");
+        UnitJson[] units = new Gson().fromJson(jsonString, UnitJson[].class);
+
+        for (UnitJson unitJson : units) {
+            int x = unitJson.getX();
+            int y = unitJson.getY();
             x--;
             y--;
             Teams team = null;
-            switch ((String) cell.get("team")) {
+            switch (unitJson.getTeam()) {
                 case "north" -> team = Teams.North;
                 case "south" -> team = Teams.South;
             }
 
             BoardUnit unit = null;
-            switch ((String) cell.get("type")) {
+            switch (unitJson.getType()) {
                 case "arsenal" -> unit = new Arsenal(this, team, new Coordinate(x, y));
                 case "cannon" -> unit = new Cannon(this, team, new Coordinate(x, y));
                 case "cavalry" -> unit = new Cavalry(this, team, new Coordinate(x, y));
