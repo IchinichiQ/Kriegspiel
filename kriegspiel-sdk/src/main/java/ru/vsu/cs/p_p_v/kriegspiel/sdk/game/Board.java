@@ -1,9 +1,6 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
 import com.google.gson.Gson;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.CellJson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.UnitJson;
@@ -35,9 +32,13 @@ public class Board {
         }
     }
 
-    public void AppendFieldFromFile(String path) throws IOException, ParseException {
-        String jsonString = Files.readString(Path.of(path));
+    public void appendFieldFromFile(Path path) throws IOException, ParseException {
+        String jsonString = Files.readString(path);
 
+        appendFieldFromJson(jsonString);
+    }
+
+    public void appendFieldFromJson(String jsonString) {
         CellJson[] cells = new Gson().fromJson(jsonString, CellJson[].class);
 
         for (CellJson cellJson : cells) {
@@ -58,9 +59,13 @@ public class Board {
         }
     }
 
-    public void AppendUnitsFromFile(String path) throws IOException {
-        String jsonString = Files.readString(Path.of(path));
+    public void appendUnitsFromFile(Path path) throws IOException {
+        String jsonString = Files.readString(path);
 
+        appendUnitsFromJson(jsonString);
+    }
+
+    public void appendUnitsFromJson(String jsonString) {
         UnitJson[] units = new Gson().fromJson(jsonString, UnitJson[].class);
 
         for (UnitJson unitJson : units) {

@@ -1,10 +1,12 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
+import com.google.gson.Gson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.Arsenal;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.RelayUnit;
 
+import java.nio.file.Path;
 import java.util.*;
 
 public abstract class AbstractGame implements Game {
@@ -17,12 +19,21 @@ public abstract class AbstractGame implements Game {
 
     private final List<GameEventListener> eventListeners = new ArrayList<>();
 
-    public AbstractGame(String fieldJsonPath, String unitsJsonPath) {
+    public AbstractGame(String fieldJson, String unitsJson) {
+        board = new Board();
+
+        board.appendFieldFromJson(fieldJson);
+        board.appendUnitsFromJson(unitsJson);
+
+        updateConnections();
+    }
+
+    public AbstractGame(Path fieldJson, Path unitsJson) {
         board = new Board();
 
         try {
-            board.AppendFieldFromFile(fieldJsonPath);
-            board.AppendUnitsFromFile(unitsJsonPath);
+            board.appendFieldFromFile(fieldJson);
+            board.appendUnitsFromFile(unitsJson);
         } catch (Exception e) {
             e.printStackTrace();
         }

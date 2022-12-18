@@ -5,6 +5,8 @@ import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Game;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.GameEventListener;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
 
+import java.nio.file.Path;
+
 public class GUI {
     Game game;
     MainWindow window;
@@ -32,7 +34,7 @@ public class GUI {
     }
 
     public void startNewLocalGame() {
-        game = new LocalGame("field.json", "units.json");
+        game = new LocalGame(Path.of("field.json"), Path.of("units.json"));
 
         window.setMainPanel(new GamePanel(game));
 

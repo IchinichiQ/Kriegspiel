@@ -6,12 +6,13 @@ import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class CLI {
     Game game;
     public CLI() {
-        this.game = new LocalGame("field.json", "units.json");;
+        this.game = new LocalGame(Path.of("field.json"), Path.of("units.json"));;
     }
 
     public void run() {
