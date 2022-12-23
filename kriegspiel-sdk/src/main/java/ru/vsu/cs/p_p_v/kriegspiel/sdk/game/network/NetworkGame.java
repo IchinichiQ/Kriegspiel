@@ -10,13 +10,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class SocketGame implements Game {
+public class NetworkGame implements Game {
     Socket socket;
     private final BufferedReader in;
     private final PrintWriter out;
 
-    public SocketGame(String server, int port) {
-        super();
+    public NetworkGame(String server, int port) {
+        Board kek = new Board();
 
         try {
             socket = new Socket(server, port);

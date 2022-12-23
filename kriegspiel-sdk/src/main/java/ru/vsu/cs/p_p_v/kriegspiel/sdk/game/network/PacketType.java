@@ -1,4 +1,4 @@
-package ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets;
+package ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network;
 
 public enum PacketType {
     WaitingPhase,
@@ -6,8 +6,10 @@ public enum PacketType {
     EndPhase,
     OpponentDisconnected,
     MoveUnit,
-    MoveUnitResult,
+    UnitMoved,
     AttackUnit,
-    AttackUnitResult,
+    UnitAttacked,
     EndTurn,
+    BoardUpdate,
+    BoardCreated
 }
