@@ -1,7 +1,6 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
 import com.google.gson.Gson;
-import org.json.simple.parser.ParseException;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.CellJson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.UnitJson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.*;
@@ -32,7 +31,7 @@ public class Board {
         }
     }
 
-    public void appendFieldFromFile(Path path) throws IOException, ParseException {
+    public void appendFieldFromFile(Path path) throws IOException {
         String jsonString = Files.readString(path);
 
         appendFieldFromJson(jsonString);

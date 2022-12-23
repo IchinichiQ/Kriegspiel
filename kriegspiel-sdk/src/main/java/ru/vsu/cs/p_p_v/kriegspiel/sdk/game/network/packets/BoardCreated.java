@@ -9,8 +9,8 @@ import java.util.List;
 public class BoardCreated extends Packet {
     private final List<CellTypeData> cellTypeData;
 
-    public BoardCreated(String type, List<CellTypeData> cellTypeData) {
-        super(PacketType.BoardCreated.name());
+    public BoardCreated(List<CellTypeData> cellTypeData) {
+        super(PacketType.BoardCreated);
 
         this.cellTypeData = cellTypeData;
     }

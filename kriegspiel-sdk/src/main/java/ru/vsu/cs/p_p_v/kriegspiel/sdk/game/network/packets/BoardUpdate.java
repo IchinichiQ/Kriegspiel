@@ -11,8 +11,8 @@ public class BoardUpdate extends Packet {
     private final List<UnitData> unitData;
     private final List<CellConnectionsData> cellConnectionsData;
 
-    public BoardUpdate(String type, List<UnitData> unitData, List<CellConnectionsData> cellConnectionsData) {
-        super(PacketType.BoardUpdate.name());
+    public BoardUpdate(List<UnitData> unitData, List<CellConnectionsData> cellConnectionsData) {
+        super(PacketType.BoardUpdate);
 
         this.unitData = unitData;
         this.cellConnectionsData = cellConnectionsData;

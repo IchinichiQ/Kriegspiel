@@ -8,7 +8,7 @@ public class MoveUnit extends Packet {
     public final Coordinate moveTo;
 
     public MoveUnit(Coordinate moveFrom, Coordinate moveTo) {
-        super(PacketType.MoveUnit.name());
+        super(PacketType.MoveUnit);
 
         this.moveFrom = moveFrom;
         this.moveTo = moveTo;

@@ -4,28 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Preparations for online games">
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/CellConnectionsData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/CellTypeData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/UnitData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/AttackUnit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/BoardCreated.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/BoardUpdate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/EndPhase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/EndTurn.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/GamePhase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/MoveUnit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/OpponentDisconnected.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/Packet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/UnitAttacked.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/UnitMoved.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/WaitingPhase.java" afterDir="false" />
+    <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Remove unneeded code">
+      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/protocol/JsonProtocol.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/protocol/Protocol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/LocalGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/LocalGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/SocketGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/NetworkGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/FirstPacket.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/NewPhase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/PacketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/PacketType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/GamePhase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/AttackUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/AttackUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/BoardCreated.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/BoardCreated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/BoardUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/BoardUpdate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/EndPhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/EndPhase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/EndTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/EndTurn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/GamePhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/GamePhase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/MoveUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/MoveUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/OpponentDisconnected.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/OpponentDisconnected.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/Packet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/UnitAttacked.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/UnitAttacked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/UnitMoved.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/UnitMoved.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/WaitingPhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-sdk/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/sdk/game/network/packets/WaitingPhase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +102,7 @@
       <workItem from="1671367055113" duration="8651000" />
       <workItem from="1671385610199" duration="3167000" />
       <workItem from="1671390252862" duration="27000" />
-      <workItem from="1671803719647" duration="10925000" />
+      <workItem from="1671803719647" duration="13975000" />
     </task>
     <task id="LOCAL-00001" summary="Split the project into sdk and client">
       <created>1671292994785</created>
@@ -157,7 +153,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671822397848</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add packets">
+      <created>1671828756936</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1671828756936</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Remove unneeded code">
+      <created>1671828849689</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1671828849689</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,6 +192,8 @@
     <MESSAGE value="Move from simple json to gson" />
     <MESSAGE value="Add ability to read board from json string" />
     <MESSAGE value="Preparations for online games" />
-    <option name="LAST_COMMIT_MESSAGE" value="Preparations for online games" />
+    <MESSAGE value="Add packets" />
+    <MESSAGE value="Remove unneeded code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unneeded code" />
   </component>
 </project>

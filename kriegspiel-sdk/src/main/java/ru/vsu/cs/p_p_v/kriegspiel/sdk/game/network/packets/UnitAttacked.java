@@ -7,7 +7,7 @@ public class UnitAttacked extends Packet{
     public final AttackUnitResult result;
 
     public UnitAttacked(AttackUnitResult result) {
-        super(PacketType.UnitAttacked.name());
+        super(PacketType.UnitAttacked);
 
         this.result = result;
     }

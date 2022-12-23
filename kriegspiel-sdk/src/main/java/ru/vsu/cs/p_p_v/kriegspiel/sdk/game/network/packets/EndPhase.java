@@ -7,7 +7,7 @@ public class EndPhase extends Packet {
     public final Teams winner;
 
     public EndPhase(Teams winner) {
-        super(PacketType.EndPhase.name());
+        super(PacketType.EndPhase);
 
         this.winner = winner;
     }

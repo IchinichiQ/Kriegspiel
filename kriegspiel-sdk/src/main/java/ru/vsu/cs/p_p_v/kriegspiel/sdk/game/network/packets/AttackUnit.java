@@ -7,7 +7,7 @@ public class AttackUnit extends Packet {
     public final Coordinate unitCoordinate;
 
     public AttackUnit(Coordinate unitCoordinate) {
-        super(PacketType.AttackUnit.name());
+        super(PacketType.AttackUnit);
 
         this.unitCoordinate = unitCoordinate;
     }

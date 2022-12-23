@@ -7,7 +7,7 @@ public class UnitMoved extends Packet {
     public final MoveUnitResult result;
 
     public UnitMoved(MoveUnitResult result) {
-        super(PacketType.UnitMoved.name());
+        super(PacketType.UnitMoved);
 
         this.result = result;
     }

@@ -2,9 +2,12 @@ package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
 import com.google.gson.Gson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.EndPhase;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.Packet;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.UnitAttacked;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.WaitingPhase;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.protocol.JsonProtocol;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.protocol.Protocol;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.*;
 
 import java.nio.file.Path;
