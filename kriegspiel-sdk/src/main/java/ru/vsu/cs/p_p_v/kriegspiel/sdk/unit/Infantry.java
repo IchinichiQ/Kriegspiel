@@ -10,7 +10,7 @@ import java.io.File;
 
 public class Infantry extends BoardUnit {
     public Infantry(Board board, Teams team, Coordinate position) {
-        super(board, team, position, new UnitStats(1, 2, 4, 6));
+        super(board, team, position, new UnitBaseStats(1, 2, 4, 6));
     }
 
     @Override

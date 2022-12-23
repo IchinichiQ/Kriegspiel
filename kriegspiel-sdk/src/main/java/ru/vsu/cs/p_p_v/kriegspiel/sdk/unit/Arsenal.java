@@ -10,7 +10,7 @@ import java.io.File;
 
 public class Arsenal extends ArsenalUnit {
     public Arsenal(Board board, Teams team, Coordinate position) {
-        super(board, team, position, new UnitStats(0, 0, 0, 0));
+        super(board, team, position, new UnitBaseStats(0, 0, 0, 0));
     }
 
     @Override

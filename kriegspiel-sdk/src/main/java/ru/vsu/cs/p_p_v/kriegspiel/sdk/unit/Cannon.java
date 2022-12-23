@@ -10,7 +10,7 @@ import java.io.File;
 
 public class Cannon extends BoardUnit {
     public Cannon(Board board, Teams team, Coordinate position) {
-        super(board, team, position, new UnitStats(1, 3, 5, 8));
+        super(board, team, position, new UnitBaseStats(1, 3, 5, 8));
     }
 
     @Override

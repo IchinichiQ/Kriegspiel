@@ -4,6 +4,7 @@ import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.Arsenal;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.RelayUnit;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitCombatStats;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,17 +26,15 @@ public interface Game {
 
     public BoardCell getBoardCell(Coordinate cellCoordinate);
 
-    public Teams getWinner();
-
     public boolean unitCanMove(Coordinate unitCoordinate);
 
-    public MoveUnitResult moveUnit(Coordinate unitCoordinate, Coordinate destCellCoordinate);
+    public void moveUnit(Coordinate unitCoordinate, Coordinate destCellCoordinate);
 
     public boolean unitCanBeCaptured(Coordinate unitCoordinate);
 
-    public AttackUnitResult attackUnit(Coordinate unitCoordinate);
+    public UnitCombatStats getUnitCombatStats(Coordinate unitCoordinate);
 
-    public void updateConnections();
+    public void attackUnit(Coordinate unitCoordinate);
 
     public void addGameEventListener(GameEventListener gameListener);
 }

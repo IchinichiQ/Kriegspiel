@@ -9,17 +9,17 @@ import java.awt.*;
 import java.util.List;
 
 abstract public class BoardUnit {
-    private Board board;
+    private transient Board board;
     private Coordinate position;
     private Teams team;
 
-    private final UnitStats baseStats;
+    private final UnitBaseStats baseStats;
 
     private boolean hasConnection;
     private boolean isArsenal;
     private boolean isRelay;
 
-    public BoardUnit(Board board, Teams team, Coordinate position, UnitStats baseStats) {
+    public BoardUnit(Board board, Teams team, Coordinate position, UnitBaseStats baseStats) {
         this.board = board;
         this.team = team;
         this.position = position;
@@ -42,7 +42,7 @@ abstract public class BoardUnit {
         return this.position;
     }
 
-    public UnitStats getBaseStats() {
+    public UnitBaseStats getBaseStats() {
         return this.baseStats;
     }
 
@@ -66,58 +66,6 @@ abstract public class BoardUnit {
         cellMoveTo.setUnit(this);
 
         return true;
-    }
-
-    public int getDefenseScore() {
-        List<BoardUnit> friendlyUnits = null;
-        switch (getTeam()) {
-            case South -> friendlyUnits = board.getSouthUnits();
-            case North -> friendlyUnits = board.getNorthUnits();
-        }
-
-        Coordinate unitPos = getPosition();
-        int defenseScore = hasConnection() ? baseStats.defense : 0;
-        defenseScore += getDefenseBuff();
-
-        for (BoardUnit nextUnit : friendlyUnits) {
-            if (nextUnit == this || !nextUnit.hasConnection())
-                continue;
-
-            Coordinate nextUnitPos = nextUnit.getPosition();
-            int nextUnitRange = baseStats.range;
-            if (unitPos.x == nextUnitPos.x || unitPos.y == nextUnitPos.y || Math.abs(unitPos.x - nextUnitPos.x) == Math.abs(unitPos.y - nextUnitPos.y)) {
-                if (Math.abs(unitPos.x - nextUnitPos.x) <= nextUnitRange && Math.abs(unitPos.y - nextUnitPos.y) <= nextUnitRange) {
-                    defenseScore += baseStats.defense;
-                }
-            }
-        }
-
-        return defenseScore;
-    }
-
-    public int getAttackScore() {
-        List<BoardUnit> hostileUnits = null;
-        switch (getTeam()) {
-            case South -> hostileUnits = board.getNorthUnits();
-            case North -> hostileUnits = board.getSouthUnits();
-        }
-
-        Coordinate unitPos = getPosition();
-        int attackScore = 0;
-        for (BoardUnit nextUnit : hostileUnits) {
-            if (!nextUnit.hasConnection())
-                continue;
-
-            Coordinate nextUnitPos = nextUnit.getPosition();
-            int nextUnitRange = nextUnit.baseStats.range;
-            if (unitPos.x == nextUnitPos.x || unitPos.y == nextUnitPos.y || Math.abs(unitPos.x - nextUnitPos.x) == Math.abs(unitPos.y - nextUnitPos.y)) {
-                if (Math.abs(unitPos.x - nextUnitPos.x) <= nextUnitRange && Math.abs(unitPos.y - nextUnitPos.y) <= nextUnitRange) {
-                    attackScore += nextUnit.baseStats.attack;
-                }
-            }
-        }
-
-        return attackScore;
     }
 
     public boolean hasConnection() {

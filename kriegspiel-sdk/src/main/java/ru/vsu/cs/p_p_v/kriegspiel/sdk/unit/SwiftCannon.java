@@ -10,7 +10,7 @@ import java.io.File;
 
 public class SwiftCannon extends BoardUnit {
     public SwiftCannon(Board board, Teams team, Coordinate position) {
-        super(board, team, position, new UnitStats(2, 3, 5, 8));
+        super(board, team, position, new UnitBaseStats(2, 3, 5, 8));
     }
 
     @Override

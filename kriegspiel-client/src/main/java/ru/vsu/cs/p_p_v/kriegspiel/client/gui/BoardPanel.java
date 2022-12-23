@@ -46,13 +46,15 @@ public class BoardPanel extends JPanel {
             }
 
             @Override
-            public void onUnitMove() {
-                repaint();
+            public void onUnitMove(MoveUnitResult result) {
+                if (result == MoveUnitResult.Success)
+                    repaint();
             }
 
             @Override
-            public void onAttack() {
-                repaint();
+            public void onAttack(AttackUnitResult result) {
+                if (result == AttackUnitResult.Capture)
+                    repaint();
             }
         });
 

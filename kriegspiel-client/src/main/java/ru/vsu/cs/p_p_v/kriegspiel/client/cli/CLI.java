@@ -1,9 +1,10 @@
 package ru.vsu.cs.p_p_v.kriegspiel.client.cli;
 
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitStats;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitBaseStats;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitCombatStats;
 
 import java.awt.*;
 import java.nio.file.Path;
@@ -16,7 +17,9 @@ public class CLI {
     }
 
     public void run() {
-        while (game.getWinner() == Teams.None) {
+        // TODO: Add events in CLI
+        //while (game.getWinner() == Teams.None) {
+        while (true) {
             printBoard();
             printState();
 
@@ -45,15 +48,17 @@ public class CLI {
     private void actionAttackUnit() {
         Coordinate unitCoordinate = getCoordinateFromUser("Please enter unit X and Y coordinates: ");
 
-        AttackUnitResult result = game.attackUnit(unitCoordinate);
-        switch (result) {
-            case NoAttackLeft -> System.out.println("No attacks left on current turn!");
-            case Capture -> System.out.println("The unit was captured");
-            case ForcedRetreat -> System.out.println("The unit was forced to retreat");
-            case None -> System.out.println("Insufficient attack score for a result");
-            case IncorrectUnitCoordinates -> System.out.println("Incorrect unit coordinates!");
-            case UnitInSameTeam -> System.out.println("You can't attack own units!");
-        }
+        game.attackUnit(unitCoordinate);
+        // TODO: Add events to the console
+//        AttackUnitResult result = game.attackUnit(unitCoordinate);
+//        switch (result) {
+//            case NoAttackLeft -> System.out.println("No attacks left on current turn!");
+//            case Capture -> System.out.println("The unit was captured");
+//            case ForcedRetreat -> System.out.println("The unit was forced to retreat");
+//            case None -> System.out.println("Insufficient attack score for a result");
+//            case IncorrectUnitCoordinates -> System.out.println("Incorrect unit coordinates!");
+//            case UnitInSameTeam -> System.out.println("You can't attack own units!");
+//        }
     }
 
     private void actionGetUnitStats() {
@@ -65,34 +70,36 @@ public class CLI {
             return;
         }
 
-        UnitStats stats = unit.getBaseStats();
+        UnitBaseStats baseStats = unit.getBaseStats();
         int defenseBuff = unit.getDefenseBuff();
-        int defenseScore = unit.getDefenseScore();
-        int attackScore = unit.getAttackScore();
 
-        System.out.printf("Speed: %d\n", stats.speed);
-        System.out.printf("Range: %d\n", stats.range);
-        System.out.printf("Attack: %d\n", stats.attack);
-        System.out.printf("Defense: %d + %d\n", stats.defense, defenseBuff);
+        UnitCombatStats combatStats = game.getUnitCombatStats(unitCoordinate);
+
+        System.out.printf("Speed: %d\n", baseStats.speed);
+        System.out.printf("Range: %d\n", baseStats.range);
+        System.out.printf("Attack: %d\n", baseStats.attack);
+        System.out.printf("Defense: %d + %d\n", baseStats.defense, defenseBuff);
         System.out.print('\n');
 
-        System.out.printf("Defense score: %d\n", defenseScore);
-        System.out.printf("Attack score: %d\n", attackScore);
+        System.out.printf("Defense score: %d\n", combatStats.defenseScore);
+        System.out.printf("Attack score: %d\n", combatStats.attackScore);
     }
 
     private void actionMoveUnit() {
         Coordinate unitCoordinate = getCoordinateFromUser("Please enter unit X and Y coordinates: ");
         Coordinate destCellCoordinate = getCoordinateFromUser("Please enter destination cell X and Y coordinates: ");
 
-        MoveUnitResult result = game.moveUnit(unitCoordinate, destCellCoordinate);
-        switch (result) {
-            case NoMovementsLeft -> System.out.println("No movements left on current turn!");
-            case UnitAlreadyMoved -> System.out.println("You can move unit only once per turn!");
-            case IncorrectUnitCoordinates -> System.out.println("Incorrect unit coordinates!");
-            case IncorrectCellCoordinates -> System.out.println("Incorrect destination cell coordinates!");
-            case UnitLackSpeed -> System.out.println("The unit doesn't  have enough speed to move into this cell!");
-            case UnitInDifferentTeam -> System.out.println("You can't control units from the enemy team!");
-        }
+        game.moveUnit(unitCoordinate, destCellCoordinate);
+        // TODO: Add events to the console
+//        MoveUnitResult result = game.moveUnit(unitCoordinate, destCellCoordinate);
+//        switch (result) {
+//            case NoMovementsLeft -> System.out.println("No movements left on current turn!");
+//            case UnitAlreadyMoved -> System.out.println("You can move unit only once per turn!");
+//            case IncorrectUnitCoordinates -> System.out.println("Incorrect unit coordinates!");
+//            case IncorrectCellCoordinates -> System.out.println("Incorrect destination cell coordinates!");
+//            case UnitLackSpeed -> System.out.println("The unit doesn't  have enough speed to move into this cell!");
+//            case UnitInDifferentTeam -> System.out.println("You can't control units from the enemy team!");
+//        }
     }
 
     private CLIAction getAction() {

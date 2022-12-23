@@ -1,8 +1,6 @@
 package ru.vsu.cs.p_p_v.kriegspiel.client.gui;
 
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Game;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.GameEventListener;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -57,12 +55,12 @@ public class ControlsPanel extends JPanel {
             }
 
             @Override
-            public void onUnitMove() {
+            public void onUnitMove(MoveUnitResult result) {
                 updateLabelsText();
             }
 
             @Override
-            public void onAttack() {
+            public void onAttack(AttackUnitResult result) {
                 updateLabelsText();
             }
         });

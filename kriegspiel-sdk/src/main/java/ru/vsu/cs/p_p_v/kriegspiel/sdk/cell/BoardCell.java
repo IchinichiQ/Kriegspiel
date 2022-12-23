@@ -19,8 +19,8 @@ public abstract class BoardCell {
     private List<ConnectionDirection> northConnectionsDirections = new ArrayList<>();
     private boolean hasSouthConnection = false;
     private List<ConnectionDirection> southConnectionsDirections = new ArrayList<>();
-    private final Color evenCellColor;
-    private final Color oddCellColor;
+    public transient final Color evenCellColor;
+    public transient final Color oddCellColor;
 
     private int defenseBuff = 0;
 

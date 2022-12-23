@@ -25,9 +25,7 @@ public class GUI {
         window.setVisible(true);
     }
 
-    public void showGameResults() {
-        Teams winner = game.getWinner();
-
+    public void showGameResults(Teams winner) {
         GameResultsPanel resultsPanel = new GameResultsPanel(this, winner);
 
         window.setMainPanel(resultsPanel);
@@ -40,8 +38,8 @@ public class GUI {
 
         game.addGameEventListener(new GameEventListener() {
             @Override
-            public void onWin() {
-                showGameResults();
+            public void onWin(Teams winner) {
+                showGameResults(winner);
             }
         });
     }
