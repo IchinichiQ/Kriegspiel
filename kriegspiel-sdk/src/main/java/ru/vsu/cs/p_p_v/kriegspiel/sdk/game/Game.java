@@ -1,18 +1,14 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.Arsenal;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.RelayUnit;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitCombatStats;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitCombatStats;
 
 public interface Game {
     public Teams getCurrentTurnTeam();
+
+    public Teams getMyTeam();
+
+    public boolean isOnlineGame();
 
     public int getLeftMoves();
 

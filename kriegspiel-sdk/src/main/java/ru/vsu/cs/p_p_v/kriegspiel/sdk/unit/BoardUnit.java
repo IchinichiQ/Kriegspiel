@@ -4,9 +4,9 @@ import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Board;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Coordinate;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitBaseStats;
 
 import java.awt.*;
-import java.util.List;
 
 abstract public class BoardUnit {
     private transient Board board;

@@ -61,6 +61,9 @@ public class BoardPanel extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (game.getMyTeam() != game.getCurrentTurnTeam())
+                    return;
+
                 BoardCell cell = getCellByPanelPoint(e.getPoint());
                 BoardUnit cellUnit = cell.getUnit();
 
@@ -222,7 +225,7 @@ public class BoardPanel extends JPanel {
         drawBoard(g2d);
         overlay.draw(g2d);
 
-        System.out.printf("Draw #%d: %d ms\n", drawNum++, (System.nanoTime() - startTime) / 1000000);
+        //System.out.printf("Draw #%d: %d ms\n", drawNum++, (System.nanoTime() - startTime) / 1000000);
     }
 
     public Game getGame() {

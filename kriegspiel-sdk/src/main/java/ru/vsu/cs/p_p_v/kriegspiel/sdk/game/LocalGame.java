@@ -1,14 +1,9 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
-import com.google.gson.Gson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.EndPhase;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.Packet;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.UnitAttacked;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.WaitingPhase;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.protocol.JsonProtocol;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.protocol.Protocol;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.*;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitBaseStats;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitCombatStats;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -54,6 +49,16 @@ public class LocalGame implements Game {
 
     public Teams getCurrentTurnTeam() {
         return currentTurnTeam;
+    }
+
+    @Override
+    public Teams getMyTeam() {
+        return currentTurnTeam;
+    }
+
+    @Override
+    public boolean isOnlineGame() {
+        return false;
     }
 
     public int getLeftMoves() {
@@ -319,20 +324,7 @@ public class LocalGame implements Game {
     }
 
     private void updateTeamConnections(List<BoardUnit> arsenalList, Teams unitsTeam) {
-        for (int y = 0; y < board.ySize; y++) {
-            for (int x = 0; x < board.xSize; x++) {
-                BoardCell curCell = getBoardCell(new Coordinate(x, y));
-                BoardUnit curCellUnit = curCell.getUnit();
-
-                if (curCellUnit != null && curCellUnit.getTeam() == unitsTeam)
-                    curCellUnit.setHasConnection(false);
-
-                if (unitsTeam == Teams.North)
-                    curCell.resetNorthConnection();
-                else
-                    curCell.resetSouthConnection();
-            }
-        }
+        board.clearCellConnections(unitsTeam);
 
         Queue<BoardUnit> unitsToProcess = new LinkedList<>(arsenalList);
         // TODO: Не самое красивое решение с листом
@@ -378,11 +370,6 @@ public class LocalGame implements Game {
         if (cell.isObstacle() || (cellUnit != null && cellUnit.getTeam() != unitsTeam))
             return false;
 
-        if (unitsTeam == Teams.North)
-            cell.addNorthConnection(dir);
-        else
-            cell.addSouthConnection(dir);
-
         if (cellUnit != null) {
             if (!cellUnit.hasConnection()) {
                 // TODO: Refactor!!
@@ -397,9 +384,14 @@ public class LocalGame implements Game {
 
                 while (!unitsToCheck.isEmpty()) {
                     BoardUnit curUnit = unitsToCheck.poll();
-                    curUnit.setHasConnection(true);
-
                     Coordinate unitPos = curUnit.getPosition();
+                    BoardCell curCell = getBoardCell(unitPos);
+                    if (unitsTeam == Teams.North)
+                        curCell.setHasNorthConnection(true);
+                    else
+                        curCell.setHasSouthConnection(true);
+
+
                     for (BoardUnit nextUnit : friendlyUnits) {
                         if (nextUnit == curUnit)
                             continue;
@@ -422,6 +414,11 @@ public class LocalGame implements Game {
                 unitsToProcess.add(cellUnit);
             }
         }
+
+        if (unitsTeam == Teams.North)
+            cell.addNorthConnection(dir);
+        else
+            cell.addSouthConnection(dir);
 
         return true;
     }

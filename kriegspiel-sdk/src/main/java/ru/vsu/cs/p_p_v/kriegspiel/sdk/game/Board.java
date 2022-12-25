@@ -1,6 +1,9 @@
 package ru.vsu.cs.p_p_v.kriegspiel.sdk.game;
 
 import com.google.gson.Gson;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.CellConnectionsData;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.CellTypeData;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.UnitData;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.CellJson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.parser.UnitJson;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.*;
@@ -58,6 +61,19 @@ public class Board {
         }
     }
 
+    public void appendFieldFromCellTypeData(List<CellTypeData> cellTypeData) {
+        for (CellTypeData cellData : cellTypeData) {
+            BoardCell curCell = null;
+            switch (cellData.type) {
+                case "frt" -> curCell = new Fortress(cellData.coordinate);
+                case "mnt" -> curCell = new Mountain(cellData.coordinate);
+                case "mps" -> curCell = new MountainPass(cellData.coordinate);
+            }
+
+            board[cellData.coordinate.y][cellData.coordinate.x] = curCell;
+        }
+    }
+
     public void appendUnitsFromFile(Path path) throws IOException {
         String jsonString = Files.readString(path);
 
@@ -88,6 +104,55 @@ public class Board {
                 case "swiftCannon" -> unit = new SwiftCannon(this, team, new Coordinate(x, y));
                 case "swiftRelay" -> unit = new SwiftRelay(this, team, new Coordinate(x, y));
             }
+        }
+    }
+
+    public void appendUnitsFromUnitData(List<UnitData> unitData) {
+        for (UnitData unit : unitData) {
+            int x = unit.position.x;
+            int y = unit.position.y;
+            Teams team = unit.team;
+
+            BoardUnit boardUnit = null;
+            switch (unit.type) {
+                case "ars" -> boardUnit = new Arsenal(this, team, new Coordinate(x, y));
+                case "can" -> boardUnit = new Cannon(this, team, new Coordinate(x, y));
+                case "cav" -> boardUnit = new Cavalry(this, team, new Coordinate(x, y));
+                case "inf" -> boardUnit = new Infantry(this, team, new Coordinate(x, y));
+                case "rel" -> boardUnit = new Relay(this, team, new Coordinate(x, y));
+                case "swC" -> boardUnit = new SwiftCannon(this, team, new Coordinate(x, y));
+                case "swR" -> boardUnit = new SwiftRelay(this, team, new Coordinate(x, y));
+            }
+        }
+    }
+
+    public void clearCellConnections(Teams team) {
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                BoardCell curCell = getCell(new Coordinate(x, y));
+
+                if (team == Teams.North)
+                    curCell.resetNorthConnection();
+                else
+                    curCell.resetSouthConnection();
+            }
+        }
+    }
+
+    public void appendCellConnections(List<CellConnectionsData> cellConnectionsData) {
+        for (CellConnectionsData connectionsData : cellConnectionsData) {
+            BoardCell cell = getCell(connectionsData.coordinate);
+
+            List<ConnectionDirection> northConnections = connectionsData.getNorthConnections();
+            List<ConnectionDirection> southConnections = connectionsData.getSouthConnections();
+
+            cell.setHasSouthConnection(connectionsData.hasSouthConnection);
+            cell.setHasNorthConnection(connectionsData.hasNorthConnection);
+
+            for (ConnectionDirection dir : northConnections)
+                cell.addNorthConnection(dir);
+            for (ConnectionDirection dir : southConnections)
+                cell.addSouthConnection(dir);
         }
     }
 
@@ -139,5 +204,17 @@ public class Board {
         } else {
             southUnits.remove(boardUnit);
         }
+    }
+
+    public void removeAllUnits() {
+        for (BoardUnit unit : northUnits) {
+            getCell(unit.getPosition()).setUnit(null);
+        }
+        northUnits.clear();
+
+        for (BoardUnit unit : southUnits) {
+            getCell(unit.getPosition()).setUnit(null);
+        }
+        southUnits.clear();
     }
 }

@@ -48,6 +48,12 @@ public class MenuPanel extends JPanel {
                 gui.startNewLocalGame();
             }
         });
+        buttonNewOnline.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gui.showConnectionPanel();
+            }
+        });
         buttonExit.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

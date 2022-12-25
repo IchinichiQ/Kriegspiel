@@ -9,6 +9,7 @@ import java.awt.event.*;
 
 public class ControlsPanel extends JPanel {
     private Game game;
+    JLabel labelMyTeam = new JLabel();
     JLabel labelCurrentTurn = new JLabel();
     JLabel labelLeftMoves = new JLabel();
     JLabel labelIsAttackUsed = new JLabel();
@@ -18,7 +19,7 @@ public class ControlsPanel extends JPanel {
         this.game = game;
         this.setLayout(new GridBagLayout());
 
-        updateLabelsText();
+        updateState();
 
         // TODO: Kostyl?
         labelLeftMoves.setBorder(new EmptyBorder(0, 0, 0, 1));
@@ -32,45 +33,57 @@ public class ControlsPanel extends JPanel {
 
         GridBagConstraints gbc = new GridBagConstraints();
 
-        gbc.gridy = 0;
+        int gridY = 0;
+
+        if (game.isOnlineGame()) {
+            gbc.gridy = gridY++;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            this.add(labelMyTeam, gbc);
+        }
+
+        gbc.gridy = gridY++;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         this.add(labelCurrentTurn, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = gridY++;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         this.add(labelLeftMoves, gbc);
 
-        gbc.gridy = 2;
+        gbc.gridy = gridY++;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         this.add(labelIsAttackUsed, gbc);
 
-        gbc.gridy = 3;
+        gbc.gridy = gridY++;
         gbc.anchor = GridBagConstraints.NORTH;
         this.add(buttonNextTurn, gbc);
 
         game.addGameEventListener(new GameEventListener() {
             @Override
             public void onNextTurn() {
-                updateLabelsText();
+                updateState();
             }
 
             @Override
             public void onUnitMove(MoveUnitResult result) {
-                updateLabelsText();
+                updateState();
             }
 
             @Override
             public void onAttack(AttackUnitResult result) {
-                updateLabelsText();
+                updateState();
             }
         });
     }
 
-    public void updateLabelsText() {
-        labelCurrentTurn.setText(String.format("Current turn: %s", game.getCurrentTurnTeam() == Teams.North ? "North" : "South"));
+    public void updateState() {
+        labelMyTeam.setText(String.format("My team: %s", game.getMyTeam()));
+        labelCurrentTurn.setText(String.format("Current turn: %s", game.getCurrentTurnTeam()));
         labelLeftMoves.setText(String.format("Unit movements left: %d", game.getLeftMoves()));
         labelIsAttackUsed.setText(String.format("Is attack used: %s", game.isAttackUsed() ? "Yes" : "No"));
 
+        buttonNextTurn.setEnabled(game.getMyTeam() == game.getCurrentTurnTeam());
+
+        labelMyTeam.repaint();
         labelCurrentTurn.repaint();
         labelLeftMoves.repaint();
         labelIsAttackUsed.repaint();

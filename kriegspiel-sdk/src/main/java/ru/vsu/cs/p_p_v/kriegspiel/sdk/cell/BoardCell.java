@@ -3,6 +3,7 @@ package ru.vsu.cs.p_p_v.kriegspiel.sdk.cell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cache.ImageFileCached;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.ConnectionDirection;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Coordinate;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
 
 import java.awt.*;
@@ -105,7 +106,7 @@ public abstract class BoardCell {
     }
 
     public void resetNorthConnection() {
-        this.hasNorthConnection = false;
+        setHasNorthConnection(false);
         northConnectionsDirections.clear();
     }
 
@@ -114,7 +115,7 @@ public abstract class BoardCell {
     }
 
     public void addNorthConnection(ConnectionDirection connectionDirection) {
-        this.hasNorthConnection = true;
+        setHasNorthConnection(true);
         northConnectionsDirections.add(connectionDirection);
     }
 
@@ -123,7 +124,7 @@ public abstract class BoardCell {
     }
 
     public void resetSouthConnection() {
-        this.hasSouthConnection = false;
+        setHasSouthConnection(false);
         southConnectionsDirections.clear();
     }
 
@@ -132,7 +133,23 @@ public abstract class BoardCell {
     }
 
     public void addSouthConnection(ConnectionDirection connectionDirection) {
-        this.hasSouthConnection = true;
+        setHasSouthConnection(true);
         southConnectionsDirections.add(connectionDirection);
+    }
+
+    public void setHasNorthConnection(boolean hasNorthConnection) {
+        this.hasNorthConnection = hasNorthConnection;
+
+        if (unit != null && unit.getTeam() == Teams.North) {
+            unit.setHasConnection(hasNorthConnection);
+        }
+    }
+
+    public void setHasSouthConnection(boolean hasSouthConnection) {
+        this.hasSouthConnection = hasSouthConnection;
+
+        if (unit != null && unit.getTeam() == Teams.South) {
+            unit.setHasConnection(hasSouthConnection);
+        }
     }
 }

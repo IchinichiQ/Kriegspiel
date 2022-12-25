@@ -13,7 +13,7 @@ public class GameResultsPanel extends JPanel {
         this.gui = gui;
         this.setLayout(new GridBagLayout());
 
-        JLabel labelInfo = new JLabel(String.format("The %s won!", winner));
+        JLabel labelInfo = new JLabel(String.format("The %s team won!", winner));
         labelInfo.setFont(labelInfo.getFont().deriveFont(50F));
 
         JPanel buttonsPanel = createButtonPanel();
@@ -22,12 +22,12 @@ public class GameResultsPanel extends JPanel {
         gbc.fill = GridBagConstraints.NORTH;
 
         gbc.gridy = 0;
-        gbc.weighty = 0.333;
+        gbc.weighty = 0.5;
         this.add(labelInfo, gbc);
 
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.NORTH;
-        gbc.weighty = 0.666;
+        gbc.weighty = 0.5;
         gbc.weightx = 1;
         this.add(buttonsPanel, gbc);
     }
@@ -36,19 +36,10 @@ public class GameResultsPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
 
-        JButton buttonRestart = new JButton("Restart");
         JButton buttonReturnToMainMenu = new JButton("Return to main menu");
 
-        buttonRestart.setPreferredSize(new Dimension(180, 25));
         buttonReturnToMainMenu.setPreferredSize(new Dimension(180, 25));
 
-        // TODO: Add support for online games
-        buttonRestart.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.startNewLocalGame();
-            }
-        });
         buttonReturnToMainMenu.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,8 +51,6 @@ public class GameResultsPanel extends JPanel {
         gbcButtons.insets = new Insets(5, 0, 0, 0);
 
         gbcButtons.gridy = 0;
-        buttonPanel.add(buttonRestart, gbcButtons);
-        gbcButtons.gridy = 1;
         buttonPanel.add(buttonReturnToMainMenu, gbcButtons);
 
         return buttonPanel;

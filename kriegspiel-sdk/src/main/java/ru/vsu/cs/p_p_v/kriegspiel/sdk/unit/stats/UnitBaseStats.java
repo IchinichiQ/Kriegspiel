@@ -1,4 +1,4 @@
-package ru.vsu.cs.p_p_v.kriegspiel.sdk.unit;
+package ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats;
 
 public class UnitBaseStats {
     public final Integer speed;

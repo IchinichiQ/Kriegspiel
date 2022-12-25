@@ -1,7 +1,8 @@
-package ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets;
+package ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.client;
 
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Coordinate;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.PacketType;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.PacketType;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.Packet;
 
 public class MoveUnit extends Packet {
     public final Coordinate moveFrom;

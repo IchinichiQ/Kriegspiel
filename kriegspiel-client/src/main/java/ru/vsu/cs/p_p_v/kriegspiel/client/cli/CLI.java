@@ -1,10 +1,10 @@
 package ru.vsu.cs.p_p_v.kriegspiel.client.cli;
 
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitBaseStats;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitBaseStats;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.UnitCombatStats;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitCombatStats;
 
 import java.awt.*;
 import java.nio.file.Path;
