@@ -12,20 +12,9 @@ public class Mountain extends BoardCell{
     }
 
     @Override
-    public String getStringRepresentation() {
-        return "^^^";
-    }
-
-    @Override
     public Image getBackgroundImage() {
         String imgPath = "images/cells/mountain.png";
 
-        Image img = null;
-        try {
-            img = ImageFileCached.readImage(new File(imgPath));
-        } catch (Exception ex) {
-        }
-
-        return img;
+        return ImageFileCached.readImage(new File(imgPath));
     }
 }

@@ -21,15 +21,6 @@ public class LocalGame implements Game {
 
     private final List<GameEventListener> eventListeners = new ArrayList<>();
 
-    public LocalGame(String fieldJson, String unitsJson) {
-        board = new Board();
-
-        board.appendFieldFromJson(fieldJson);
-        board.appendUnitsFromJson(unitsJson);
-
-        updateConnections();
-    }
-
     public LocalGame(Path fieldJson, Path unitsJson) {
         board = new Board();
 
@@ -41,10 +32,6 @@ public class LocalGame implements Game {
         }
 
         updateConnections();
-    }
-
-    public LocalGame() {
-        board = new Board();
     }
 
     public Teams getCurrentTurnTeam() {
@@ -150,7 +137,6 @@ public class LocalGame implements Game {
             triggerMoveEvent(MoveUnitResult.UnitInDifferentTeam);
             return;
         }
-        // TODO: Handle in CLI
         if (!unit.hasConnection()) {
             triggerMoveEvent(MoveUnitResult.NoConnection);
             return;
@@ -206,7 +192,7 @@ public class LocalGame implements Game {
     }
 
     private int getUnitDefenseScore(BoardUnit unit) {
-        List<BoardUnit> friendlyUnits = null;
+        List<BoardUnit> friendlyUnits = new ArrayList<>();
         switch (unit.getTeam()) {
             case South -> friendlyUnits = board.getSouthUnits();
             case North -> friendlyUnits = board.getNorthUnits();
@@ -235,7 +221,7 @@ public class LocalGame implements Game {
     }
 
     private int getUnitAttackScore(BoardUnit unit) {
-        List<BoardUnit> hostileUnits = null;
+        List<BoardUnit> hostileUnits = new ArrayList<>();
         switch (unit.getTeam()) {
             case South -> hostileUnits = board.getNorthUnits();
             case North -> hostileUnits = board.getSouthUnits();
@@ -262,13 +248,6 @@ public class LocalGame implements Game {
     }
 
     public void attackUnit(Coordinate unitCoordinate) {
-        // TODO: DEBUG!!!
-        if (true) {
-            for (GameEventListener listener : eventListeners)
-                listener.onWin(Teams.North);
-            return;
-        }
-
         if (isAttackUsed) {
             triggerAttackEvent(AttackUnitResult.NoAttackLeft);
             return;
@@ -292,7 +271,7 @@ public class LocalGame implements Game {
 
         UnitCombatStats combatStats = getUnitCombatStats(unit.getPosition());
 
-        AttackUnitResult result = null;
+        AttackUnitResult result;
         if (combatStats.attackScore - combatStats.defenseScore == 1) {
             result = AttackUnitResult.ForcedRetreat;
         } else if (combatStats.attackScore - combatStats.defenseScore >= 2) {
@@ -327,43 +306,48 @@ public class LocalGame implements Game {
         board.clearCellConnections(unitsTeam);
 
         Queue<BoardUnit> unitsToProcess = new LinkedList<>(arsenalList);
-        // TODO: Не самое красивое решение с листом
         List<RelayUnit> visitedRelays = new ArrayList<>();
         while (!unitsToProcess.isEmpty()) {
             BoardUnit unit = unitsToProcess.poll();
             int x = unit.getPosition().x;
             int y = unit.getPosition().y;
 
-
             for (int curX = x; curX < board.xSize; curX++) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Horizontal, y, curX)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Horizontal, y, curX))
+                    break;
             }
             for (int curX = x; curX >= 0; curX--) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Horizontal, y, curX)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Horizontal, y, curX))
+                    break;
             }
             for (int curY = y; curY < board.ySize; curY++) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Vertical, curY, x)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Vertical, curY, x))
+                    break;
             }
             for (int curY = y; curY >= 0; curY--) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Vertical, curY, x)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.Vertical, curY, x))
+                    break;
             }
 
             for (int curX = x, curY = y; curX >= 0 && curY >= 0; curX--, curY--) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMajor, curY, curX)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMajor, curY, curX))
+                    break;
             }
             for (int curX = x, curY = y; curX >= 0 && curY < board.ySize; curX--, curY++) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMinor, curY, curX)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMinor, curY, curX))
+                    break;
             }
             for (int curX = x, curY = y; curX < board.xSize && curY < board.ySize; curX++, curY++) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMajor, curY, curX)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMajor, curY, curX))
+                    break;
             }
             for (int curX = x, curY = y; curX < board.xSize && curY >= 0; curX++, curY--) {
-                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMinor, curY, curX)) break;
+                if (!updateCellConnection(unitsTeam, unitsToProcess, visitedRelays, ConnectionDirection.DiagonalMinor, curY, curX))
+                    break;
             }
         }
     }
 
-    // TODO: Почему просить инвертировать?
     private boolean updateCellConnection(Teams unitsTeam, Queue<BoardUnit> unitsToProcess, List<RelayUnit> visitedRelays, ConnectionDirection dir, int y, int x) {
         BoardCell cell = board.getCell(new Coordinate(x, y));
         BoardUnit cellUnit = cell.getUnit();
@@ -372,8 +356,7 @@ public class LocalGame implements Game {
 
         if (cellUnit != null) {
             if (!cellUnit.hasConnection()) {
-                // TODO: Refactor!!
-                List<BoardUnit> friendlyUnits = null;
+                List<BoardUnit> friendlyUnits = new ArrayList<>();
                 switch (cellUnit.getTeam()) {
                     case South -> friendlyUnits = board.getSouthUnits();
                     case North -> friendlyUnits = board.getNorthUnits();
@@ -391,19 +374,16 @@ public class LocalGame implements Game {
                     else
                         curCell.setHasSouthConnection(true);
 
-
                     for (BoardUnit nextUnit : friendlyUnits) {
                         if (nextUnit == curUnit)
                             continue;
 
                         Coordinate nextUnitPos = nextUnit.getPosition();
                         int range = 1;
-                        if (unitPos.x == nextUnitPos.x || unitPos.y == nextUnitPos.y || Math.abs(unitPos.x - nextUnitPos.x) == Math.abs(unitPos.y - nextUnitPos.y)) {
-                            if (Math.abs(unitPos.x - nextUnitPos.x) <= range && Math.abs(unitPos.y - nextUnitPos.y) <= range) {
-                                if (!nextUnit.hasConnection()) {
-                                    unitsToCheck.add(nextUnit);
-                                }
-                            }
+                        if ((unitPos.x == nextUnitPos.x || unitPos.y == nextUnitPos.y || Math.abs(unitPos.x - nextUnitPos.x) == Math.abs(unitPos.y - nextUnitPos.y))
+                                && Math.abs(unitPos.x - nextUnitPos.x) <= range && Math.abs(unitPos.y - nextUnitPos.y) <= range
+                                && !nextUnit.hasConnection()) {
+                            unitsToCheck.add(nextUnit);
                         }
                     }
                 }
@@ -415,16 +395,11 @@ public class LocalGame implements Game {
             }
         }
 
-        if (unitsTeam == Teams.North)
-            cell.addNorthConnection(dir);
-        else
-            cell.addSouthConnection(dir);
-
+        cell.addConnection(dir, unitsTeam);
         return true;
     }
 
-    public void addGameEventListener(GameEventListener gameListener)
-    {
+    public void addGameEventListener(GameEventListener gameListener) {
         this.eventListeners.add(gameListener);
     }
 }

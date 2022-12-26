@@ -75,9 +75,6 @@ public class NetworkGame implements Game {
     }
 
     private void handlePacket(Packet packet) {
-        // TODO: Debug!!!
-        System.out.println(packet.type);
-
         switch (packet) {
             case WaitingPhase waitingPhase -> handleWaitingPhasePacket(waitingPhase);
             case GamePhase gamePhase -> handleGamePhasePacket(gamePhase);

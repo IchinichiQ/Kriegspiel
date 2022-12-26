@@ -15,20 +15,9 @@ public class SwiftRelay extends RelayUnit {
     }
 
     @Override
-    public String getStringRepresentation() {
-        return "SwR";
-    }
-
-    @Override
     public Image getImageRepresentation() {
         String imgPath = String.format("images/units/%s/swiftRelay.png", getTeam() == Teams.North ? "north" : "south");
 
-        Image img = null;
-        try {
-            img = ImageFileCached.readImage(new File(imgPath));
-        } catch (Exception ex) {
-        }
-
-        return img;
+        return ImageFileCached.readImage(new File(imgPath));
     }
 }

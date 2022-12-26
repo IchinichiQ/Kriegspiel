@@ -15,20 +15,9 @@ public class Infantry extends BoardUnit {
     }
 
     @Override
-    public String getStringRepresentation() {
-        return "Inf";
-    }
-
-    @Override
     public Image getImageRepresentation() {
         String imgPath = String.format("images/units/%s/infantry.png", getTeam() == Teams.North ? "north" : "south");
 
-        Image img = null;
-        try {
-            img = ImageFileCached.readImage(new File(imgPath));
-        } catch (Exception ex) {
-        }
-
-        return img;
+        return ImageFileCached.readImage(new File(imgPath));
     }
 }

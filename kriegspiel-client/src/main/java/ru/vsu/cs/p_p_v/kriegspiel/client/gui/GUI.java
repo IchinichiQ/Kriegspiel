@@ -1,5 +1,6 @@
 package ru.vsu.cs.p_p_v.kriegspiel.client.gui;
 
+import ru.vsu.cs.p_p_v.kriegspiel.client.gui.panels.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Game;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.GameEventListener;

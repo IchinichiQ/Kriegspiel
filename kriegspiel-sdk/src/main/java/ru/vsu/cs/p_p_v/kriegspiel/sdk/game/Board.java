@@ -150,9 +150,9 @@ public class Board {
             cell.setHasNorthConnection(connectionsData.hasNorthConnection);
 
             for (ConnectionDirection dir : northConnections)
-                cell.addNorthConnection(dir);
+                cell.addConnection(dir, Teams.North);
             for (ConnectionDirection dir : southConnections)
-                cell.addSouthConnection(dir);
+                cell.addConnection(dir, Teams.South);
         }
     }
 

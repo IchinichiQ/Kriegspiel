@@ -13,34 +13,25 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class BoardCell {
-    private Coordinate coordinate;
+    private final Coordinate coordinate;
     private BoardUnit unit = null;
     private final boolean isObstacle;
     private boolean hasNorthConnection = false;
-    private List<ConnectionDirection> northConnectionsDirections = new ArrayList<>();
+    private final List<ConnectionDirection> northConnectionsDirections = new ArrayList<>();
     private boolean hasSouthConnection = false;
-    private List<ConnectionDirection> southConnectionsDirections = new ArrayList<>();
-    public transient final Color evenCellColor;
-    public transient final Color oddCellColor;
+    private final List<ConnectionDirection> southConnectionsDirections = new ArrayList<>();
 
     private int defenseBuff = 0;
 
-    public BoardCell(Coordinate coordinate, boolean isObstacle, Color evenCellColor, Color oddCellColor, int defenseBuff) {
-        this.coordinate = coordinate;
-        this.isObstacle = isObstacle;
-        this.evenCellColor = evenCellColor;
-        this.oddCellColor = oddCellColor;
+    public BoardCell(Coordinate coordinate, boolean isObstacle, int defenseBuff) {
+        this(coordinate, isObstacle);
         this.defenseBuff = defenseBuff;
     }
 
     public BoardCell(Coordinate coordinate, boolean isObstacle) {
         this.coordinate = coordinate;
         this.isObstacle = isObstacle;
-        this.evenCellColor = null;
-        this.oddCellColor = null;
     }
-
-    public abstract String getStringRepresentation();
 
     public Coordinate getCoordinate() {
         return coordinate;
@@ -48,14 +39,6 @@ public abstract class BoardCell {
 
     public boolean isObstacle() {
         return isObstacle;
-    }
-
-    public Color getEvenCellColor() {
-        return evenCellColor;
-    }
-
-    public Color getOddCellColor() {
-        return oddCellColor;
     }
 
     public Image getBackgroundImage() {return null;}
@@ -66,23 +49,14 @@ public abstract class BoardCell {
         if (isObstacle || (!hasNorthConnection && !hasSouthConnection))
             return images;
 
-        // TODO: Refactor
         for (ConnectionDirection connectionDir : northConnectionsDirections) {
             String imgPath = String.format("images/connections/north%s.png", connectionDir.toString());
-
-            try {
-                images.add(ImageFileCached.readImage(new File(imgPath)));
-            } catch (Exception ex) {
-            }
+            images.add(ImageFileCached.readImage(new File(imgPath)));
         }
 
         for (ConnectionDirection connectionDir : southConnectionsDirections) {
             String imgPath = String.format("images/connections/south%s.png", connectionDir.toString());
-
-            try {
-                images.add(ImageFileCached.readImage(new File(imgPath)));
-            } catch (Exception ex) {
-            }
+            images.add(ImageFileCached.readImage(new File(imgPath)));
         }
 
         return images;
@@ -100,7 +74,16 @@ public abstract class BoardCell {
         this.unit = unit;
     }
 
-    // TODO: Don't really like connection api
+    public void addConnection(ConnectionDirection connectionDirection, Teams team) {
+        if (team == Teams.North) {
+            setHasNorthConnection(true);
+            northConnectionsDirections.add(connectionDirection);
+        } else {
+            setHasSouthConnection(true);
+            southConnectionsDirections.add(connectionDirection);
+        }
+    }
+
     public boolean hasNorthConnection() {
         return hasNorthConnection;
     }
@@ -114,11 +97,6 @@ public abstract class BoardCell {
         return Collections.unmodifiableList(northConnectionsDirections);
     }
 
-    public void addNorthConnection(ConnectionDirection connectionDirection) {
-        setHasNorthConnection(true);
-        northConnectionsDirections.add(connectionDirection);
-    }
-
     public boolean hasSouthConnection() {
         return hasSouthConnection;
     }
@@ -130,11 +108,6 @@ public abstract class BoardCell {
 
     public List<ConnectionDirection> getSouthConnectionsDirections() {
         return Collections.unmodifiableList(southConnectionsDirections);
-    }
-
-    public void addSouthConnection(ConnectionDirection connectionDirection) {
-        setHasSouthConnection(true);
-        southConnectionsDirections.add(connectionDirection);
     }
 
     public void setHasNorthConnection(boolean hasNorthConnection) {

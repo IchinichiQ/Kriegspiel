@@ -12,12 +12,8 @@ abstract public class BoardUnit {
     private transient Board board;
     private Coordinate position;
     private Teams team;
-
     private final UnitBaseStats baseStats;
-
     private boolean hasConnection;
-    private boolean isArsenal;
-    private boolean isRelay;
 
     public BoardUnit(Board board, Teams team, Coordinate position, UnitBaseStats baseStats) {
         this.board = board;
@@ -33,8 +29,6 @@ abstract public class BoardUnit {
 
         move(position);
     }
-
-    public abstract String getStringRepresentation();
 
     public abstract Image getImageRepresentation();
 
@@ -72,7 +66,6 @@ abstract public class BoardUnit {
         return hasConnection;
     }
 
-    // TODO: Должно вызываться толкьо из BoardCell, но сейчас может отовсюду
     public void setHasConnection(boolean hasConnection) {
         this.hasConnection = hasConnection;
     }

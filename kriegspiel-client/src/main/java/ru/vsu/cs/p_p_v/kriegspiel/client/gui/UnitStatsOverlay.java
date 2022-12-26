@@ -1,5 +1,6 @@
 package ru.vsu.cs.p_p_v.kriegspiel.client.gui;
 
+import ru.vsu.cs.p_p_v.kriegspiel.client.gui.panels.BoardPanel;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Game;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.BoardUnit;
@@ -13,15 +14,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class UnitStatsOverlay {
+    private final int intervalToShowOverlayMs = 1000;
+
     private final BoardPanel boardPanel;
     private final Game game;
 
+    private Point mousePoint = null;
+    private long hoverTimeMs = 0;
+    private boolean shouldDraw = false;
     private BoardCell hoveredCell = null;
     private BoardUnit hoveredUnit = null;
     private UnitBaseStats hoveredUnitBaseStats = null;
     private UnitCombatStats hoveredUnitCombatStats = null;
-    private Point mousePoint = null;
-    private long hoverTimeMs = 0;
 
     public UnitStatsOverlay(BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
@@ -30,11 +34,7 @@ public class UnitStatsOverlay {
         this.boardPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
-                hoveredCell = null;
-                hoveredUnitBaseStats = null;
-                hoveredUnitCombatStats = null;
-                hoverTimeMs = 0;
-                // TODO: Bug when leaving board with drawn overlay
+                updateHoveredCell(null);
                 boardPanel.repaint();
             }
 
@@ -44,46 +44,28 @@ public class UnitStatsOverlay {
 
                 BoardCell currentlyHoveredCell = boardPanel.getCellByPanelPoint(e.getPoint());
                 if (currentlyHoveredCell != hoveredCell) {
-                    hoveredCell = currentlyHoveredCell;
-                    hoveredUnitBaseStats = null;
-                    hoveredUnitCombatStats = null;
-
-                    // TODO: Bad expressions
-                    if (hoverTimeMs >= 1000) {
-                        hoverTimeMs = 0;
-                        boardPanel.repaint();
-                    } else {
-                        hoverTimeMs = 0;
-                    }
-                } else if (hoverTimeMs >= 1000) {
+                    updateHoveredCell(currentlyHoveredCell);
+                } else if (shouldDraw) {
                     boardPanel.repaint();
                 }
             }
         });
 
         Timer hoverTimeUpdater = new Timer(50, new AbstractAction() {
-            private boolean isDrawn = false;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (hoveredCell != null) {
                     hoverTimeMs += 50;
-                    if (hoverTimeMs >= 1000) {
-                        if (!isDrawn) {
-                            hoveredUnit = hoveredCell.getUnit();
-                            if (hoveredUnit != null) {
-                                hoveredUnitBaseStats = hoveredUnit.getBaseStats();
-                                hoveredUnitCombatStats = game.getUnitCombatStats(hoveredUnit.getPosition());
-                            } else {
-                                hoveredUnitBaseStats = null;
-                                hoveredUnitCombatStats = null;
-                            }
+                    if (hoverTimeMs >= intervalToShowOverlayMs && !shouldDraw) {
+                        shouldDraw = true;
 
-                            boardPanel.repaint();
-                            isDrawn = true;
+                        hoveredUnit = hoveredCell.getUnit();
+                        if (hoveredUnit != null) {
+                            hoveredUnitBaseStats = hoveredUnit.getBaseStats();
+                            hoveredUnitCombatStats = game.getUnitCombatStats(hoveredUnit.getPosition());
                         }
-                    } else {
-                        isDrawn = false;
+
+                        boardPanel.repaint();
                     }
                 }
             }
@@ -91,11 +73,20 @@ public class UnitStatsOverlay {
         hoverTimeUpdater.start();
     }
 
-    public void draw(Graphics2D g) {
-        if (hoverTimeMs < 1000)
-            return;
+    private void updateHoveredCell(BoardCell newHoveredCell) {
+        hoveredCell = newHoveredCell;
+        hoveredUnitBaseStats = null;
+        hoveredUnitCombatStats = null;
+        hoverTimeMs = 0;
 
-        if (hoveredUnit == null)
+        if (shouldDraw) {
+            shouldDraw = false;
+            boardPanel.repaint();
+        }
+    }
+
+    public void draw(Graphics2D g) {
+        if (!shouldDraw || hoveredUnit == null)
             return;
 
         Point worldMousePoint = boardPanel.pointScreenToWorld(mousePoint);

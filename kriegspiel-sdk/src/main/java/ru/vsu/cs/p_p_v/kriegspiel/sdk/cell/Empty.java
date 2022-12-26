@@ -6,9 +6,4 @@ public class Empty extends BoardCell {
     public Empty(Coordinate coordinate) {
         super(coordinate, false);
     }
-
-    @Override
-    public String getStringRepresentation() {
-        return "   ";
-    }
 }
