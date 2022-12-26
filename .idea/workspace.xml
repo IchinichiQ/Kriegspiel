@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Temp">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kriegspiel-client/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/client/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-client/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/client/gui/MainWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
