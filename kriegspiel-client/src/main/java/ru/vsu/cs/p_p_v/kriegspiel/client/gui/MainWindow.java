@@ -8,7 +8,7 @@ import java.io.File;
 
 public class MainWindow extends JFrame {
     public MainWindow() throws HeadlessException {
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Kriegspiel");
 
         Image icon = ImageFileCached.readImage(new File("images/icon.png"));
