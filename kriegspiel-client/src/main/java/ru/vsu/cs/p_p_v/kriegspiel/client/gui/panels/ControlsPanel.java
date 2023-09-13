@@ -18,6 +18,7 @@ public class ControlsPanel extends JPanel {
     public ControlsPanel(Game game) {
         this.game = game;
         this.setLayout(new GridBagLayout());
+        this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         updateState();
 
@@ -28,32 +29,36 @@ public class ControlsPanel extends JPanel {
         });
         buttonNextTurn.setText("End turn");
 
+        JPanel container = new JPanel();
+        container.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         int gridY = 0;
 
         if (game.isOnlineGame()) {
             gbc.gridy = gridY++;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            this.add(labelMyTeam, gbc);
+            gbc.anchor = GridBagConstraints.CENTER;
+            container.add(labelMyTeam, gbc);
         }
 
         gbc.gridy = gridY++;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        this.add(labelCurrentTurn, gbc);
+        gbc.anchor = GridBagConstraints.CENTER;
+        container.add(labelCurrentTurn, gbc);
 
         gbc.gridy = gridY++;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        this.add(labelLeftMoves, gbc);
+        gbc.anchor = GridBagConstraints.CENTER;
+        container.add(labelLeftMoves, gbc);
         labelLeftMoves.setBorder(new EmptyBorder(0, 0, 0, 1));
 
         gbc.gridy = gridY++;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        this.add(labelIsAttackUsed, gbc);
+        gbc.anchor = GridBagConstraints.CENTER;
+        container.add(labelIsAttackUsed, gbc);
 
         gbc.gridy = gridY++;
-        gbc.anchor = GridBagConstraints.NORTH;
-        this.add(buttonNextTurn, gbc);
+        gbc.anchor = GridBagConstraints.CENTER;
+        container.add(buttonNextTurn, gbc);
+
+        this.add(container);
 
         game.addGameEventListener(new GameEventListener() {
             @Override

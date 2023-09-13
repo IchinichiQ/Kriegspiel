@@ -16,11 +16,8 @@ public class GamePanel extends JPanel {
         boardContainer.setBackground(Color.black);
         boardContainer.add(boardPanel);
 
-        JPanel controlsContainer = new JPanel();
-        controlsContainer.add(controlsPanel);
-
         MainPanel.add(boardContainer, BorderLayout.CENTER);
-        MainPanel.add(controlsContainer, BorderLayout.EAST);
+        MainPanel.add(controlsPanel, BorderLayout.EAST);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
