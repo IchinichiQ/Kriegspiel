@@ -13,14 +13,16 @@ abstract public class BoardUnit {
     private Coordinate position;
     private Teams team;
     private final UnitBaseStats baseStats;
+    private final String name;
     private boolean hasConnection;
 
-    public BoardUnit(Board board, Teams team, Coordinate position, UnitBaseStats baseStats) {
+    public BoardUnit(Board board, Teams team, Coordinate position, UnitBaseStats baseStats, String name) {
         this.board = board;
         this.team = team;
         this.position = position;
 
         this.baseStats = baseStats;
+        this.name = name;
 
         switch (this.team) {
             case North -> board.addNorthUnit(this);
@@ -38,6 +40,10 @@ abstract public class BoardUnit {
 
     public UnitBaseStats getBaseStats() {
         return this.baseStats;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public int getDefenseBuff() {

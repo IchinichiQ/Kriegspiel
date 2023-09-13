@@ -11,7 +11,7 @@ import java.io.File;
 
 public class Cavalry extends BoardUnit {
     public Cavalry(Board board, Teams team, Coordinate position) {
-        super(board, team, position, new UnitBaseStats(2, 2, 4, 5));
+        super(board, team, position, new UnitBaseStats(2, 2, 4, 5), "Cavalry");
     }
 
     @Override

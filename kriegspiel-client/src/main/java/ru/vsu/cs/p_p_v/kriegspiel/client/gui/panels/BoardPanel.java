@@ -20,6 +20,7 @@ import java.util.List;
 
 public class BoardPanel extends JPanel {
     private final Game game;
+
     private final int boardHeight;
     private final int boardWidth;
     private final int cellSideLength;
@@ -225,5 +226,13 @@ public class BoardPanel extends JPanel {
 
     public Game getGame() {
         return game;
+    }
+
+    public int getBoardHeight() {
+        return boardHeight;
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
     }
 }

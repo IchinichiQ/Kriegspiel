@@ -11,7 +11,7 @@ import java.io.File;
 
 public class SwiftRelay extends RelayUnit {
     public SwiftRelay(Board board, Teams team, Coordinate position) {
-        super(board, team, position, new UnitBaseStats(1, 0, 0, 1));
+        super(board, team, position, new UnitBaseStats(1, 0, 0, 1), "Swift relay");
     }
 
     @Override
