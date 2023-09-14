@@ -180,6 +180,7 @@ public class GameSession implements Runnable {
         }
 
         game.endTurn();
+        sendBoardUpdatePacket();
     }
 
     private void sendPacket(Packet packet, Teams team) {
