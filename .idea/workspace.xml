@@ -9,8 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Temp">
-      <change beforePath="$PROJECT_DIR$/kriegspiel-client/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/client/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-client/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/client/gui/MainWindow.java" afterDir="false" />
+    <list default="true" id="de3e2abd-20b3-4c9f-8d88-ec83a676dbf8" name="Changes" comment="Server: Update board at the end of a turn">
+      <change beforePath="$PROJECT_DIR$/kriegspiel-server/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/server/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/kriegspiel-server/src/main/java/ru/vsu/cs/p_p_v/kriegspiel/server/Logger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +53,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Client GUI">
+  <component name="RunManager" selected="Application.Server CLI">
     <configuration name="Client GUI" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="ru.vsu.cs.p_p_v.kriegspiel.client.Main" />
       <module name="kriegspiel-client" />

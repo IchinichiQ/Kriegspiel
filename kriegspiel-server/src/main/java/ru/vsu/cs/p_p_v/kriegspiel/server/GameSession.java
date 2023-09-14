@@ -31,7 +31,7 @@ public class GameSession implements Runnable {
         try {
             DataInputStream inNorth = new DataInputStream(socket.getInputStream());
             DataOutputStream outNorth = new DataOutputStream(socket.getOutputStream());
-            clientNorth = new Client(socket, protocol, inNorth, outNorth);
+            clientNorth = new Client(socket, Teams.North, protocol, inNorth, outNorth);
 
             sendPacket(new WaitingPhase(), Teams.North);
         } catch (IOException e) {
@@ -47,10 +47,13 @@ public class GameSession implements Runnable {
                         clientNorth.in.read(packetLengthBytes, 0, 3);
                         int packetLength = (packetLengthBytes[0] & 0xFF) << 16 | (packetLengthBytes[1] & 0xFF) << 8 | (packetLengthBytes[2] & 0xFF);
 
-                        byte[] packet = new byte[packetLength];
-                        clientNorth.in.readFully(packet, 0, packet.length);
+                        byte[] packetBytes = new byte[packetLength];
+                        clientNorth.in.readFully(packetBytes, 0, packetBytes.length);
 
-                        handlePacket(protocol.parsePacket(packet), Teams.North);
+                        Packet packet = protocol.parsePacket(packetBytes);
+                        Logger.logReceivedPacket(clientNorth, packet);
+
+                        handlePacket(packet, Teams.North);
                     }
                 }
             } catch(IOException e) {
@@ -67,7 +70,7 @@ public class GameSession implements Runnable {
             DataInputStream inSouth = new DataInputStream(socket.getInputStream());
             DataOutputStream outSouth = new DataOutputStream(socket.getOutputStream());
 
-            clientSouth = new Client(socket, protocol, inSouth, outSouth);
+            clientSouth = new Client(socket, Teams.South, protocol, inSouth, outSouth);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -81,10 +84,13 @@ public class GameSession implements Runnable {
                         clientSouth.in.read(packetLengthBytes, 0, 3);
                         int packetLength = (packetLengthBytes[0] & 0xFF) << 16 | (packetLengthBytes[1] & 0xFF) << 8 | (packetLengthBytes[2] & 0xFF);
 
-                        byte[] packet = new byte[packetLength];
-                        clientSouth.in.readFully(packet, 0, packet.length);
+                        byte[] packetBytes = new byte[packetLength];
+                        clientSouth.in.readFully(packetBytes, 0, packetBytes.length);
 
-                        handlePacket(protocol.parsePacket(packet), Teams.South);
+                        Packet packet = protocol.parsePacket(packetBytes);
+                        Logger.logReceivedPacket(clientSouth, packet);
+
+                        handlePacket(packet, Teams.South);
                     }
                 }
             } catch(IOException e) {
@@ -142,8 +148,6 @@ public class GameSession implements Runnable {
     }
 
     private void handlePacket(Packet packet, Teams team) {
-        System.out.printf("RECEIVED (%s): %s\n", team, packet.type);
-
         switch (packet) {
             case AttackUnit attackUnit -> handleAttackUnit(attackUnit, team);
             case MoveUnit moveUnit -> handleMoveUnit(moveUnit, team);
@@ -179,26 +183,13 @@ public class GameSession implements Runnable {
     }
 
     private void sendPacket(Packet packet, Teams team) {
-        try {
-            switch (team) {
-                case South -> {
-                    clientSouth.out.write(clientSouth.protocol.encodePacket(packet));
-                    System.out.printf("SENT (South): %s\n", packet.type);
-                }
-                case North -> {
-                    clientNorth.out.write(clientNorth.protocol.encodePacket(packet));
-                    System.out.printf("SENT (North): %s\n", packet.type);
-                }
-                case Both -> {
-                    clientSouth.out.write(clientSouth.protocol.encodePacket(packet));
-                    System.out.printf("SENT (South): %s\n", packet.type);
-
-                    clientNorth.out.write(clientNorth.protocol.encodePacket(packet));
-                    System.out.printf("SENT (North): %s\n", packet.type);
-                }
+        switch (team) {
+            case South -> clientSouth.sendPacket(packet);
+            case North -> clientNorth.sendPacket(packet);
+            case Both -> {
+                clientSouth.sendPacket(packet);
+                clientNorth.sendPacket(packet);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 

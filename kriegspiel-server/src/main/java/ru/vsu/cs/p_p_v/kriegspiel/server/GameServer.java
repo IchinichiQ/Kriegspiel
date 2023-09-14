@@ -15,12 +15,12 @@ public class GameServer {
     }
 
     public void start() throws IOException {
-        System.out.printf("Server started on: %d%n", port);
+        Logger.log(String.format("Server started on port %d%n", port));
         ServerSocket serverSocket = new ServerSocket(port);
 
         while (true) {
             Socket socket = serverSocket.accept();
-            System.out.printf("Client connected from: %s%n", socket.getInetAddress());
+            Logger.log(String.format("Client connected from %s%n", socket.getInetAddress()));
             if (lastSession == null) {
                 lastSession = new GameSession(new JsonProtocol(), socket);
                 new Thread(lastSession).start();
