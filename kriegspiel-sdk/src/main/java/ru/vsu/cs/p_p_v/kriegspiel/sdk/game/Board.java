@@ -88,10 +88,10 @@ public class Board {
             int y = unitJson.getY();
             x--;
             y--;
-            Teams team = null;
+            Team team = null;
             switch (unitJson.getTeam()) {
-                case "north" -> team = Teams.North;
-                case "south" -> team = Teams.South;
+                case "north" -> team = Team.North;
+                case "south" -> team = Team.South;
             }
 
             BoardUnit unit = null;
@@ -111,7 +111,7 @@ public class Board {
         for (UnitData unit : unitData) {
             int x = unit.position.x;
             int y = unit.position.y;
-            Teams team = unit.team;
+            Team team = unit.team;
 
             BoardUnit boardUnit = null;
             switch (unit.type) {
@@ -126,12 +126,12 @@ public class Board {
         }
     }
 
-    public void clearCellConnections(Teams team) {
+    public void clearCellConnections(Team team) {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 BoardCell curCell = getCell(new Coordinate(x, y));
 
-                if (team == Teams.North)
+                if (team == Team.North)
                     curCell.resetNorthConnection();
                 else
                     curCell.resetSouthConnection();
@@ -150,9 +150,9 @@ public class Board {
             cell.setHasNorthConnection(connectionsData.hasNorthConnection);
 
             for (ConnectionDirection dir : northConnections)
-                cell.addConnection(dir, Teams.North);
+                cell.addConnection(dir, Team.North);
             for (ConnectionDirection dir : southConnections)
-                cell.addConnection(dir, Teams.South);
+                cell.addConnection(dir, Team.South);
         }
     }
 
@@ -199,7 +199,7 @@ public class Board {
     public void removeUnit(BoardUnit boardUnit) {
         getCell(boardUnit.getPosition()).setUnit(null);
 
-        if (boardUnit.getTeam() == Teams.North) {
+        if (boardUnit.getTeam() == Team.North) {
             northUnits.remove(boardUnit);
         } else {
             southUnits.remove(boardUnit);

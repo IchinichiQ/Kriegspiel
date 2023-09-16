@@ -4,9 +4,9 @@ import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitCombatStats;
 
 public interface Game {
-    public Teams getCurrentTurnTeam();
+    public Team getCurrentTurnTeam();
 
-    public Teams getMyTeam();
+    public Team getMyTeam();
 
     public boolean isOnlineGame();
 

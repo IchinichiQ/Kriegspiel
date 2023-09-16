@@ -4,5 +4,5 @@ public interface GameEventListener {
     default void onNextTurn() {}
     default void onUnitMove(MoveUnitResult result) {};
     default void onAttack(AttackUnitResult result) {};
-    default void onWin(Teams winner) {};
+    default void onWin(Team winner) {};
 }

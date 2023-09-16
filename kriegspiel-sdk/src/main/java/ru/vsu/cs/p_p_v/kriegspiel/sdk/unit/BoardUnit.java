@@ -3,7 +3,7 @@ package ru.vsu.cs.p_p_v.kriegspiel.sdk.unit;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.cell.BoardCell;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Board;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Coordinate;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Team;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.unit.stats.UnitBaseStats;
 
 import java.awt.*;
@@ -11,12 +11,12 @@ import java.awt.*;
 abstract public class BoardUnit {
     private transient Board board;
     private Coordinate position;
-    private Teams team;
+    private Team team;
     private final UnitBaseStats baseStats;
     private final String name;
     private boolean hasConnection;
 
-    public BoardUnit(Board board, Teams team, Coordinate position, UnitBaseStats baseStats, String name) {
+    public BoardUnit(Board board, Team team, Coordinate position, UnitBaseStats baseStats, String name) {
         this.board = board;
         this.team = team;
         this.position = position;
@@ -50,7 +50,7 @@ abstract public class BoardUnit {
         return board.getCell(position).getDefenseBuff();
     }
 
-    public Teams getTeam() {
+    public Team getTeam() {
         return this.team;
     }
 

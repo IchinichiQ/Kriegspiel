@@ -19,8 +19,8 @@ public class NetworkGame implements Game {
     private final DataInputStream in;
     private final DataOutputStream out;
 
-    private Teams myTeam = null;
-    private Teams currentTurnTeam = null;
+    private Team myTeam = null;
+    private Team currentTurnTeam = null;
 
     private Board board;
 
@@ -118,8 +118,8 @@ public class NetworkGame implements Game {
         board.removeAllUnits();
         board.appendUnitsFromUnitData(this.unitData);
 
-        board.clearCellConnections(Teams.North);
-        board.clearCellConnections(Teams.South);
+        board.clearCellConnections(Team.North);
+        board.clearCellConnections(Team.South);
         board.appendCellConnections(cellConnectionsData);
     }
 
@@ -153,7 +153,7 @@ public class NetworkGame implements Game {
     }
 
     @Override
-    public Teams getMyTeam() {
+    public Team getMyTeam() {
         return myTeam;
     }
 
@@ -163,7 +163,7 @@ public class NetworkGame implements Game {
     }
 
     @Override
-    public Teams getCurrentTurnTeam() {
+    public Team getCurrentTurnTeam() {
         return currentTurnTeam;
     }
 

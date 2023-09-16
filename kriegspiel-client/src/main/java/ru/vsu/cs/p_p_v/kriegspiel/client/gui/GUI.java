@@ -4,7 +4,7 @@ import ru.vsu.cs.p_p_v.kriegspiel.client.gui.panels.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.*;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Game;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.GameEventListener;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Team;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.NetworkGame;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.NetworkGameEventListener;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.protocol.JsonProtocol;
@@ -30,7 +30,7 @@ public class GUI {
         window.setVisible(true);
     }
 
-    public void showGameResults(Teams winner) {
+    public void showGameResults(Team winner) {
         GameResultsPanel resultsPanel = new GameResultsPanel(this, winner);
 
         window.setMainPanel(resultsPanel);
@@ -43,7 +43,7 @@ public class GUI {
 
         game.addGameEventListener(new GameEventListener() {
             @Override
-            public void onWin(Teams winner) {
+            public void onWin(Team winner) {
                 showGameResults(winner);
             }
         });
@@ -64,7 +64,7 @@ public class GUI {
 
         game.addGameEventListener(new GameEventListener() {
             @Override
-            public void onWin(Teams winner) {
+            public void onWin(Team winner) {
                 showGameResults(winner);
             }
         });

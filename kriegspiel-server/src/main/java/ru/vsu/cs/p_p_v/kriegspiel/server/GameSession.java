@@ -31,9 +31,9 @@ public class GameSession implements Runnable {
         try {
             DataInputStream inNorth = new DataInputStream(socket.getInputStream());
             DataOutputStream outNorth = new DataOutputStream(socket.getOutputStream());
-            clientNorth = new Client(socket, Teams.North, protocol, inNorth, outNorth);
+            clientNorth = new Client(socket, Team.North, protocol, inNorth, outNorth);
 
-            sendPacket(new WaitingPhase(), Teams.North);
+            sendPacket(new WaitingPhase(), Team.North);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +53,7 @@ public class GameSession implements Runnable {
                         Packet packet = protocol.parsePacket(packetBytes);
                         Logger.logReceivedPacket(clientNorth, packet);
 
-                        handlePacket(packet, Teams.North);
+                        handlePacket(packet, Team.North);
                     }
                 }
             } catch(IOException e) {
@@ -70,7 +70,7 @@ public class GameSession implements Runnable {
             DataInputStream inSouth = new DataInputStream(socket.getInputStream());
             DataOutputStream outSouth = new DataOutputStream(socket.getOutputStream());
 
-            clientSouth = new Client(socket, Teams.South, protocol, inSouth, outSouth);
+            clientSouth = new Client(socket, Team.South, protocol, inSouth, outSouth);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +90,7 @@ public class GameSession implements Runnable {
                         Packet packet = protocol.parsePacket(packetBytes);
                         Logger.logReceivedPacket(clientSouth, packet);
 
-                        handlePacket(packet, Teams.South);
+                        handlePacket(packet, Team.South);
                     }
                 }
             } catch(IOException e) {
@@ -111,7 +111,7 @@ public class GameSession implements Runnable {
             game.addGameEventListener(new GameEventListener() {
                 @Override
                 public void onNextTurn() {
-                    sendPacket(new NextTurn(game.getCurrentTurnTeam()), Teams.Both);
+                    sendPacket(new NextTurn(game.getCurrentTurnTeam()), Team.Both);
                 }
 
                 @Override
@@ -119,7 +119,7 @@ public class GameSession implements Runnable {
                     if (result == MoveUnitResult.Success)
                         sendBoardUpdatePacket();
 
-                    sendPacket(new UnitMoved(result), Teams.Both);
+                    sendPacket(new UnitMoved(result), Team.Both);
                 }
 
                 @Override
@@ -127,27 +127,27 @@ public class GameSession implements Runnable {
                     if (result == AttackUnitResult.Capture)
                         sendBoardUpdatePacket();
 
-                    sendPacket(new UnitAttacked(result), Teams.Both);
+                    sendPacket(new UnitAttacked(result), Team.Both);
                 }
 
                 @Override
-                public void onWin(Teams winner) {
+                public void onWin(Team winner) {
                     gameOver = true;
-                    sendPacket(new EndPhase(winner), Teams.Both);
+                    sendPacket(new EndPhase(winner), Team.Both);
                 }
             });
 
             sendBoardCreatePacket();
             sendBoardUpdatePacket();
 
-            sendPacket(new GamePhase(Teams.North, game.getCurrentTurnTeam()), Teams.North);
-            sendPacket(new GamePhase(Teams.South, game.getCurrentTurnTeam()), Teams.South);
+            sendPacket(new GamePhase(Team.North, game.getCurrentTurnTeam()), Team.North);
+            sendPacket(new GamePhase(Team.South, game.getCurrentTurnTeam()), Team.South);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void handlePacket(Packet packet, Teams team) {
+    private void handlePacket(Packet packet, Team team) {
         switch (packet) {
             case AttackUnit attackUnit -> handleAttackUnit(attackUnit, team);
             case MoveUnit moveUnit -> handleMoveUnit(moveUnit, team);
@@ -156,7 +156,7 @@ public class GameSession implements Runnable {
         }
     }
 
-    private void handleAttackUnit(AttackUnit packet, Teams team) {
+    private void handleAttackUnit(AttackUnit packet, Team team) {
         if (team != game.getCurrentTurnTeam()) {
             sendPacket(new UnitAttacked(AttackUnitResult.NotMyTurn), team);
             return;
@@ -165,16 +165,16 @@ public class GameSession implements Runnable {
         game.attackUnit(packet.unitCoordinate);
     }
 
-    private void handleMoveUnit(MoveUnit packet, Teams team) {
+    private void handleMoveUnit(MoveUnit packet, Team team) {
         if (team != game.getCurrentTurnTeam()) {
-            sendPacket(new UnitMoved(MoveUnitResult.NotMyTurn), Teams.Both);
+            sendPacket(new UnitMoved(MoveUnitResult.NotMyTurn), Team.Both);
             return;
         }
 
         game.moveUnit(packet.moveFrom, packet.moveTo);
     }
 
-    private void handleEndTurn(EndTurn packet, Teams team) {
+    private void handleEndTurn(EndTurn packet, Team team) {
         if (team != game.getCurrentTurnTeam()) {
             return;
         }
@@ -183,7 +183,7 @@ public class GameSession implements Runnable {
         sendBoardUpdatePacket();
     }
 
-    private void sendPacket(Packet packet, Teams team) {
+    private void sendPacket(Packet packet, Team team) {
         switch (team) {
             case South -> clientSouth.sendPacket(packet);
             case North -> clientNorth.sendPacket(packet);
@@ -216,7 +216,7 @@ public class GameSession implements Runnable {
             }
         }
 
-        sendPacket(new BoardCreated(cellData), Teams.Both);
+        sendPacket(new BoardCreated(cellData), Team.Both);
     }
 
     private void sendBoardUpdatePacket() {
@@ -256,6 +256,6 @@ public class GameSession implements Runnable {
             }
         }
 
-        sendPacket(new BoardUpdate(unitData, cellConnectionsData), Teams.Both);
+        sendPacket(new BoardUpdate(unitData, cellConnectionsData), Team.Both);
     }
 }

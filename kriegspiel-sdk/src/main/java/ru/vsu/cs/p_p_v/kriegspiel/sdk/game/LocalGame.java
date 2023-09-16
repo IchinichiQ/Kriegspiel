@@ -14,7 +14,7 @@ import java.util.Queue;
 public class LocalGame implements Game {
     protected final Board board;
 
-    private Teams currentTurnTeam = Teams.South;
+    private Team currentTurnTeam = Team.South;
     private int leftMoves = 5;
     private final List<BoardUnit> movedUnits = new ArrayList<>();
     private boolean isAttackUsed = false;
@@ -34,12 +34,12 @@ public class LocalGame implements Game {
         updateConnections();
     }
 
-    public Teams getCurrentTurnTeam() {
+    public Team getCurrentTurnTeam() {
         return currentTurnTeam;
     }
 
     @Override
-    public Teams getMyTeam() {
+    public Team getMyTeam() {
         return currentTurnTeam;
     }
 
@@ -60,7 +60,7 @@ public class LocalGame implements Game {
         leftMoves = 5;
         movedUnits.clear();
         isAttackUsed = false;
-        currentTurnTeam = currentTurnTeam == Teams.North ? Teams.South : Teams.North;
+        currentTurnTeam = currentTurnTeam == Team.North ? Team.South : Team.North;
 
         for (GameEventListener listener : eventListeners)
             listener.onNextTurn();
@@ -78,7 +78,7 @@ public class LocalGame implements Game {
         return board.getCell(cellCoordinate);
     }
 
-    private Teams getWinner() {
+    private Team getWinner() {
         boolean isSouthWon = true;
         for (BoardUnit unit : board.getNorthUnits()) {
             if (unit instanceof Arsenal) {
@@ -87,7 +87,7 @@ public class LocalGame implements Game {
             }
         }
         if (isSouthWon)
-            return Teams.South;
+            return Team.South;
 
         boolean isNorthWon = true;
         for (BoardUnit unit : board.getSouthUnits()) {
@@ -97,9 +97,9 @@ public class LocalGame implements Game {
             }
         }
         if (isNorthWon)
-            return Teams.North;
+            return Team.North;
 
-        return Teams.None;
+        return Team.None;
     }
 
     public boolean unitCanMove(Coordinate unitCoordinate) {
@@ -285,8 +285,8 @@ public class LocalGame implements Game {
 
         triggerAttackEvent(result);
 
-        Teams winner = getWinner();
-        if (winner != Teams.None) {
+        Team winner = getWinner();
+        if (winner != Team.None) {
             for (GameEventListener listener : eventListeners)
                 listener.onWin(winner);
         }
@@ -298,11 +298,11 @@ public class LocalGame implements Game {
     }
 
     private void updateConnections() {
-        updateTeamConnections(board.getNorthArsenalUnits(), Teams.North);
-        updateTeamConnections(board.getSouthArsenalUnits(), Teams.South);
+        updateTeamConnections(board.getNorthArsenalUnits(), Team.North);
+        updateTeamConnections(board.getSouthArsenalUnits(), Team.South);
     }
 
-    private void updateTeamConnections(List<BoardUnit> arsenalList, Teams unitsTeam) {
+    private void updateTeamConnections(List<BoardUnit> arsenalList, Team unitsTeam) {
         board.clearCellConnections(unitsTeam);
 
         Queue<BoardUnit> unitsToProcess = new LinkedList<>(arsenalList);
@@ -348,7 +348,7 @@ public class LocalGame implements Game {
         }
     }
 
-    private boolean updateCellConnection(Teams unitsTeam, Queue<BoardUnit> unitsToProcess, List<RelayUnit> visitedRelays, ConnectionDirection dir, int y, int x) {
+    private boolean updateCellConnection(Team unitsTeam, Queue<BoardUnit> unitsToProcess, List<RelayUnit> visitedRelays, ConnectionDirection dir, int y, int x) {
         BoardCell cell = board.getCell(new Coordinate(x, y));
         BoardUnit cellUnit = cell.getUnit();
         if (cell.isObstacle() || (cellUnit != null && cellUnit.getTeam() != unitsTeam))
@@ -369,7 +369,7 @@ public class LocalGame implements Game {
                     BoardUnit curUnit = unitsToCheck.poll();
                     Coordinate unitPos = curUnit.getPosition();
                     BoardCell curCell = getBoardCell(unitPos);
-                    if (unitsTeam == Teams.North)
+                    if (unitsTeam == Team.North)
                         curCell.setHasNorthConnection(true);
                     else
                         curCell.setHasSouthConnection(true);

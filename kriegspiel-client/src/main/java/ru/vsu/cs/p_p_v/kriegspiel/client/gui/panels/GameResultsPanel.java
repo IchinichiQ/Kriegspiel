@@ -1,7 +1,7 @@
 package ru.vsu.cs.p_p_v.kriegspiel.client.gui.panels;
 
 import ru.vsu.cs.p_p_v.kriegspiel.client.gui.GUI;
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Team;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 public class GameResultsPanel extends JPanel {
     private GUI gui;
 
-    public GameResultsPanel(GUI gui, Teams winner) {
+    public GameResultsPanel(GUI gui, Team winner) {
         this.gui = gui;
         this.setLayout(new GridBagLayout());
 

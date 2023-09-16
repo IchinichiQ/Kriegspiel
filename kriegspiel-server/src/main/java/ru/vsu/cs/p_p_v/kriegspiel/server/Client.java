@@ -1,6 +1,6 @@
 package ru.vsu.cs.p_p_v.kriegspiel.server;
 
-import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Teams;
+import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.Team;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.packets.Packet;
 import ru.vsu.cs.p_p_v.kriegspiel.sdk.game.network.protocol.Protocol;
 
@@ -9,13 +9,13 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 
 public class Client {
-    public final Teams team;
+    public final Team team;
     public final Socket socket;
     public final Protocol protocol;
     public final DataInputStream in;
     private final DataOutputStream out;
 
-    public Client(Socket socket, Teams team, Protocol protocol, DataInputStream in, DataOutputStream out) {
+    public Client(Socket socket, Team team, Protocol protocol, DataInputStream in, DataOutputStream out) {
         this.socket = socket;
         this.team = team;
         this.protocol = protocol;
